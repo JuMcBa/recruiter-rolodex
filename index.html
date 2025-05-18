@@ -39,6 +39,12 @@
     ];
 
     try {
+      console.log('Loading CDN scripts...');
+      if (!window.React || !window.ReactDOM || !window.Babel) {
+        throw new Error('One or more CDN scripts failed to load (React, ReactDOM, Babel).');
+      }
+      console.log('CDN scripts loaded successfully');
+
       function App() {
         console.log('Initializing App component...');
         const [candidates, setCandidates] = React.useState(() => {
