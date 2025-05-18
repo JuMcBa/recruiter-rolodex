@@ -12,7 +12,7 @@
 <body>
   <div id="root"></div>
   <script type="text/babel">
-    console.log('Starting Recruiter Rolodex application...');
+    console.log('Starting Recruiter Rolodex application at', new Date().toISOString());
     const DEFAULT_PHOTO = 'https://via.placeholder.com/150?text=No+Photo';
 
     const sampleCandidates = [
@@ -44,10 +44,13 @@
         const [candidates, setCandidates] = React.useState(() => {
           try {
             const saved = localStorage.getItem('candidates');
-            console.log('Retrieved from localStorage:', saved);
-            return saved ? JSON.parse(saved) : sampleCandidates;
+            console.log('Retrieved from localStorage:', saved ? 'Data found' : 'No data, using sampleCandidates');
+            const parsed = saved ? JSON.parse(saved) : sampleCandidates;
+            console.log('Initial candidates:', parsed.length, 'candidates', parsed.map(c => c.name));
+            return parsed;
           } catch (e) {
-            console.error('Error parsing localStorage:', e);
+            console.error('Error parsing localStorage:', e.message, e.stack);
+            console.log('Falling back to sampleCandidates');
             return sampleCandidates;
           }
         });
@@ -57,65 +60,75 @@
 
         React.useEffect(() => {
           try {
-            console.log('Saving candidates to localStorage:', candidates);
+            console.log('Saving candidates to localStorage:', candidates.length, 'candidates', candidates.map(c => c.name));
             localStorage.setItem('candidates', JSON.stringify(candidates));
             console.log('Saved candidates to localStorage');
           } catch (e) {
-            console.error('Error saving to localStorage:', e);
+            console.error('Error saving to localStorage:', e.message, e.stack);
           }
         }, [candidates]);
 
         const addCandidate = (candidate) => {
           try {
+            console.log('Received candidate data:', candidate);
             const newCandidate = {
               id: Date.now(),
-              name: candidate.name.trim(),
-              function: candidate.function.trim(),
-              company: candidate.company.trim(),
+              name: candidate.name ? candidate.name.trim() : '',
+              function: candidate.function ? candidate.function.trim() : '',
+              company: candidate.company ? candidate.company.trim() : '',
               linkedin: candidate.linkedin ? candidate.linkedin.trim() : '',
               comments: candidate.comments ? candidate.comments.trim() : '',
-              keywords: candidate.keywords.map(k => k.trim()).filter(k => k),
+              keywords: Array.isArray(candidate.keywords) ? candidate.keywords.map(k => k.trim()).filter(k => k) : [],
               createdAt: new Date().toISOString(),
               updatedAt: new Date().toISOString()
             };
             console.log('Adding candidate:', newCandidate);
+            if (!newCandidate.name || !newCandidate.function || !newCandidate.company) {
+              throw new Error('Name, Function, and Company are required.');
+            }
             setCandidates(prev => {
               const updated = [newCandidate, ...prev];
-              console.log('New candidates state:', updated);
+              console.log('New candidates state:', updated.length, 'candidates', updated.map(c => c.name));
               return [...updated];
             });
             setShowModal(false);
             console.log('Modal closed after adding candidate');
           } catch (e) {
-            console.error('Error adding candidate:', e);
+            console.error('Error adding candidate:', e.message, e.stack);
+            throw e;
           }
         };
 
         const updateCandidate = (updatedCandidate) => {
           try {
+            console.log('Received updated candidate:', updatedCandidate);
             const updated = {
               ...updatedCandidate,
-              name: updatedCandidate.name.trim(),
-              function: updatedCandidate.function.trim(),
-              company: updatedCandidate.company.trim(),
+              name: updatedCandidate.name ? updatedCandidate.name.trim() : '',
+              function: updatedCandidate.function ? updatedCandidate.function.trim() : '',
+              company: updatedCandidate.company ? updatedCandidate.company.trim() : '',
               linkedin: updatedCandidate.linkedin ? updatedCandidate.linkedin.trim() : '',
               comments: updatedCandidate.comments ? updatedCandidate.comments.trim() : '',
-              keywords: updatedCandidate.keywords.map(k => k.trim()).filter(k => k),
+              keywords: Array.isArray(updatedCandidate.keywords) ? updatedCandidate.keywords.map(k => k.trim()).filter(k => k) : [],
               updatedAt: new Date().toISOString()
             };
             console.log('Updating candidate:', updated);
+            if (!updated.name || !updated.function || !updated.company) {
+              throw new Error('Name, Function, and Company are required.');
+            }
             setCandidates(prev => {
               const updatedList = prev.map(c => 
                 c.id === updated.id ? updated : c
               );
-              console.log('New candidates state:', updatedList);
+              console.log('New candidates state:', updatedList.length, 'candidates', updatedList.map(c => c.name));
               return [...updatedList];
             });
             setShowModal(false);
             setEditingCandidate(null);
             console.log('Modal closed after updating candidate');
           } catch (e) {
-            console.error('Error updating candidate:', e);
+            console.error('Error updating candidate:', e.message, e.stack);
+            throw e;
           }
         };
 
@@ -124,11 +137,11 @@
             console.log('Deleting candidate with id:', id);
             setCandidates(prev => {
               const updated = prev.filter(c => c.id !== id);
-              console.log('New candidates state:', updated);
+              console.log('New candidates state:', updated.length, 'candidates', updated.map(c => c.name));
               return [...updated];
             });
           } catch (e) {
-            console.error('Error deleting candidate:', e);
+            console.error('Error deleting candidate:', e.message, e.stack);
           }
         };
 
@@ -142,7 +155,7 @@
               (c.keywords || []).some(k => k.toLowerCase().includes(searchTerm.toLowerCase()))
             );
           } catch (e) {
-            console.error('Error filtering candidates:', e);
+            console.error('Error filtering candidates:', e.message, e.stack);
             return false;
           }
         });
@@ -156,7 +169,7 @@
           })
           .slice(0, 6);
 
-        console.log('Rendering with recent candidates:', recentCandidates);
+        console.log('Rendering with recent candidates:', recentCandidates.map(c => c.name));
 
         return (
           <div className="min-h-screen bg-gray-100 p-6">
@@ -196,7 +209,7 @@
               )}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {(searchTerm ? filteredCandidates : recentCandidates).map(candidate => {
-                  console.log('Rendering candidate card:', candidate.name);
+                  console.log('Rendering candidate card:', candidate.name, 'ID:', candidate.id);
                   return (
                     <CandidateCard
                       key={candidate.id}
@@ -214,6 +227,9 @@
                   );
                 })}
               </div>
+              {(!searchTerm && recentCandidates.length === 0) && (
+                <p className="text-center text-gray-500 mt-4">No recent candidates available.</p>
+              )}
             </div>
           </div>
         );
@@ -232,18 +248,14 @@
 
         const handleSubmit = (e) => {
           e.preventDefault();
+          setError('');
           try {
-            if (!formData.name.trim() || !formData.function.trim() || !formData.company.trim()) {
-              setError('Name, Function, and Company are required.');
-              console.error('Validation failed:', formData);
-              return;
-            }
-            setError('');
-            console.log('Submitting form data:', formData);
+            console.log('Form submitted with data:', formData);
             onSave(formData);
+            console.log('Form data sent to onSave');
           } catch (e) {
-            console.error('Error submitting form:', e);
-            setError('Failed to save candidate. Please try again.');
+            console.error('Error submitting form:', e.message, e.stack);
+            setError(e.message || 'Failed to save candidate. Please try again.');
           }
         };
 
@@ -257,7 +269,7 @@
               console.log('Added keyword:', keyword);
             }
           } catch (e) {
-            console.error('Error adding keyword:', e);
+            console.error('Error adding keyword:', e.message, e.stack);
           }
         };
 
@@ -269,7 +281,7 @@
             });
             console.log('Removed keyword at index:', index);
           } catch (e) {
-            console.error('Error removing keyword:', e);
+            console.error('Error removing keyword:', e.message, e.stack);
           }
         };
 
@@ -427,10 +439,21 @@
       }
 
       console.log('Rendering application...');
-      ReactDOM.render(<App />, document.getElementById('root'));
-      console.log('Application rendered successfully');
+      try {
+        ReactDOM.render(<App />, document.getElementById('root'));
+        console.log('Application rendered successfully');
+      } catch (e) {
+        console.error('Fatal error in rendering:', e.message, e.stack);
+        document.getElementById('root').innerHTML = `
+          <div style="text-align: center; color: red; padding: 20px;">
+            <h1>Error Loading Application</h1>
+            <p>Please check the console for details and ensure all scripts loaded correctly.</p>
+            <p>Try serving this file via an HTTP server (e.g., 'npx serve' or 'python -m http.server').</p>
+          </div>
+        `;
+      }
     } catch (e) {
-      console.error('Fatal error in application:', e.message, e.stack);
+      console.error('Fatal error in application initialization:', e.message, e.stack);
       document.getElementById('root').innerHTML = `
         <div style="text-align: center; color: red; padding: 20px;">
           <h1>Error Loading Application</h1>
