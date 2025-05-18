@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recruiter Rolodex</title>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone@7.26.9/babel.min.js" crossorigin></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    console.log('Starting Recruiter Rolodex application...');
+    const DEFAULT_PHOTO = 'https://via.placeholder.com/150?text=No+Photo';
+
+    const sampleCandidates = [
+      { id: 1, name: "Alice Johnson", function: "Software Engineer", company: "TechTrend Innovations", linkedin: "https://linkedin.com/in/alicejohnson", comments: "Strong coding skills, experienced in React and Node.js.", keywords: ["React", "Node.js", "JavaScript", "Agile"], createdAt: "2025-05-01T10:00:00Z", updatedAt: "2025-05-01T10:00:00Z" },
+      { id: 2, name: "Bob Martinez", function: "Product Manager", company: "GrowEasy Solutions", linkedin: "https://linkedin.com/in/bobmartinez", comments: "Excellent at cross-functional collaboration.", keywords: ["Product Management", "Scrum", "UX", "Strategy"], createdAt: "2025-05-02T12:00:00Z", updatedAt: "2025-05-02T12:00:00Z" },
+      { id: 3, name: "Clara Nguyen", function: "Data Scientist", company: "DataCore Analytics", linkedin: "https://linkedin.com/in/claranguyen", comments: "Expert in machine learning and Python.", keywords: ["Python", "Machine Learning", "SQL", "Statistics"], createdAt: "2025-05-03T14:00:00Z", updatedAt: "2025-05-03T14:00:00Z" },
+      { id: 4, name: "David Kim", function: "UX Designer", company: "CreativeLabs", linkedin: "https://linkedin.com/in/davidkim", comments: "Skilled in Figma and user research.", keywords: ["UX Design", "Figma", "User Research", "Prototyping"], createdAt: "2025-05-04T09:00:00Z", updatedAt: "2025-05-04T09:00:00Z" },
+      { id: 5, name: "Emma Patel", function: "DevOps Engineer", company: "CloudPeak Systems", linkedin: "https://linkedin.com/in/emmapatel", comments: "Proficient in AWS and Kubernetes.", keywords: ["AWS", "Kubernetes", "CI/CD", "Docker"], createdAt: "2025-05-05T11:00:00Z", updatedAt: "2025-05-05T11:00:00Z" },
+      { id: 6, name: "Frank Wilson", function: "Marketing Manager", company: "BrandBoost Inc.", linkedin: "https://linkedin.com/in/frankwilson", comments: "Creative campaign strategist.", keywords: ["Marketing", "SEO", "Content Strategy", "Analytics"], createdAt: "2025-05-06T13:00:00Z", updatedAt: "2025-05-06T13:00:00Z" },
+      { id: 7, name: "Grace Lee", function: "Frontend Developer", company: "WebWave Technologies", linkedin: "https://linkedin.com/in/gracelee", comments: "Specializes in Vue.js and TypeScript.", keywords: ["Vue.js", "TypeScript", "CSS", "Responsive Design"], createdAt: "2025-05-07T15:00:00Z", updatedAt: "2025-05-07T15:00:00Z" },
+      { id: 8, name: "Henry Brown", function: "Cybersecurity Analyst", company: "SecureNet Solutions", linkedin: "https://linkedin.com/in/henrybrown", comments: "Experienced in threat analysis.", keywords: ["Cybersecurity", "Penetration Testing", "Firewalls"], createdAt: "2025-05-08T10:00:00Z", updatedAt: "2025-05-08T10:00:00Z" },
+      { id: 9, name: "Isabella Garcia", function: "HR Specialist", company: "PeopleFirst Corp", linkedin: "https://linkedin.com/in/isabellagarcia", comments: "Strong in talent acquisition.", keywords: ["HR", "Recruiting", "Employee Relations", "Onboarding"], createdAt: "2025-05-09T12:00:00Z", updatedAt: "2025-05-09T12:00:00Z" },
+      { id: 10, name: "James Thompson", function: "Backend Developer", company: "CodeCraft Systems", linkedin: "https://linkedin.com/in/jamesthompson", comments: "Expert in Java and Spring Boot.", keywords: ["Java", "Spring Boot", "REST APIs", "PostgreSQL"], createdAt: "2025-05-10T14:00:00Z", updatedAt: "2025-05-10T14:00:00Z" },
+      { id: 11, name: "Katherine Evans", function: "Business Analyst", company: "InsightConsulting", linkedin: "https://linkedin.com/in/katherineevans", comments: "Great at requirement gathering.", keywords: ["Business Analysis", "Agile", "Stakeholder Management"], createdAt: "2025-05-11T09:00:00Z", updatedAt: "2025-05-11T09:00:00Z" },
+      { id: 12, name: "Liam Carter", function: "Mobile Developer", company: "AppVenture Studio", linkedin: "https://linkedin.com/in/liamcarter", comments: "Skilled in Flutter and Swift.", keywords: ["Flutter", "Swift", "iOS", "Android"], createdAt: "2025-05-12T11:00:00Z", updatedAt: "2025-05-12T11:00:00Z" },
+      { id: 13, name: "Mia Rodriguez", function: "Content Writer", company: "WordSmith Media", linkedin: "https://linkedin.com/in/miarodriguez", comments: "Produces engaging blog content.", keywords: ["Content Writing", "SEO", "Blogging", "Copywriting"], createdAt: "2025-05-13T13:00:00Z", updatedAt: "2025-05-13T13:00:00Z" },
+      { id: 14, name: "Noah Davis", function: "Cloud Architect", company: "SkyHigh Technologies", linkedin: "https://linkedin.com/in/noahdavis", comments: "Designed scalable cloud solutions.", keywords: ["Azure", "Cloud Architecture", "Microservices"], createdAt: "2025-05-14T15:00:00Z", updatedAt: "2025-05-14T15:00:00Z" },
+      { id: 15, name: "Olivia Clark", function: "Graphic Designer", company: "PixelPerfect Studio", linkedin: "https://linkedin.com/in/oliviaclark", comments: "Creative with Adobe Suite.", keywords: ["Graphic Design", "Adobe Illustrator", "Branding"], createdAt: "2025-05-15T10:00:00Z", updatedAt: "2025-05-15T10:00:00Z" },
+      { id: 16, name: "Peter Harris", function: "Project Manager", company: "PlanWise Solutions", linkedin: "https://linkedin.com/in/peterharris", comments: "Certified PMP, great leader.", keywords: ["Project Management", "PMP", "Agile", "Risk Management"], createdAt: "2025-05-16T12:00:00Z", updatedAt: "2025-05-16T12:00:00Z" },
+      { id: 17, name: "Quinn Lopez", function: "AI Engineer", company: "IntelliCore Labs", linkedin: "https://linkedin.com/in/quinnlopez", comments: "Works on deep learning models.", keywords: ["AI", "Deep Learning", "TensorFlow", "Python"], createdAt: "2025-05-17T14:00:00Z", updatedAt: "2025-05-17T14:00:00Z" },
+      { id: 18, name: "Rachel White", function: "Sales Manager", company: "GrowFast Enterprises", linkedin: "https://linkedin.com/in/rachelwhite", comments: "Strong client relationship skills.", keywords: ["Sales", "CRM", "Negotiation", "B2B"], createdAt: "2025-05-18T09:00:00Z", updatedAt: "2025-05-18T09:00:00Z" },
+      { id: 19, name: "Samuel Green", function: "Database Administrator", company: "DataVault Systems", linkedin: "https://linkedin.com/in/samuelgreen", comments: "Optimizes SQL databases.", keywords: ["SQL", "Database Administration", "MySQL", "Performance Tuning"], createdAt: "2025-05-18T11:00:00Z", updatedAt: "2025-05-18T11:00:00Z" },
+      { id: 20, name: "Tara Adams", function: "Quality Assurance Engineer", company: "TestRight Solutions", linkedin: "https://linkedin.com/in/taraadams", comments: "Experienced in automated testing.", keywords: ["QA", "Selenium", "Test Automation", "JIRA"], createdAt: "2025-05-18T13:00:00Z", updatedAt: "2025-05-18T13:00:00Z" }
+    ];
+
+    try {
+      function App() {
+        console.log('Initializing App component...');
+        const [candidates, setCandidates] = React.useState(() => {
+          try {
+            const saved = localStorage.getItem('candidates');
+            console.log('Retrieved from localStorage:', saved);
+            return saved ? JSON.parse(saved) : sampleCandidates;
+          } catch (e) {
+            console.error('Error parsing localStorage:', e);
+            return sampleCandidates;
+          }
+        });
+        const [searchTerm, setSearchTerm] = React.useState('');
+        const [showModal, setShowModal] = React.useState(false);
+        const [editingCandidate, setEditingCandidate] = React.useState(null);
+
+        React.useEffect(() => {
+          try {
+            console.log('Saving candidates to localStorage:', candidates);
+            localStorage.setItem('candidates', JSON.stringify(candidates));
+            console.log('Saved candidates to localStorage');
+          } catch (e) {
+            console.error('Error saving to localStorage:', e);
+          }
+        }, [candidates]);
+
+        const addCandidate = (candidate) => {
+          try {
+            const newCandidate = {
+              id: Date.now(),
+              name: candidate.name.trim(),
+              function: candidate.function.trim(),
+              company: candidate.company.trim(),
+              linkedin: candidate.linkedin ? candidate.linkedin.trim() : '',
+              comments: candidate.comments ? candidate.comments.trim() : '',
+              keywords: candidate.keywords.map(k => k.trim()).filter(k => k),
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString()
+            };
+            console.log('Adding candidate:', newCandidate);
+            setCandidates(prev => {
+              const updated = [newCandidate, ...prev];
+              console.log('New candidates state:', updated);
+              return [...updated];
+            });
+            setShowModal(false);
+            console.log('Modal closed after adding candidate');
+          } catch (e) {
+            console.error('Error adding candidate:', e);
+          }
+        };
+
+        const updateCandidate = (updatedCandidate) => {
+          try {
+            const updated = {
+              ...updatedCandidate,
+              name: updatedCandidate.name.trim(),
+              function: updatedCandidate.function.trim(),
+              company: updatedCandidate.company.trim(),
+              linkedin: updatedCandidate.linkedin ? updatedCandidate.linkedin.trim() : '',
+              comments: updatedCandidate.comments ? updatedCandidate.comments.trim() : '',
+              keywords: updatedCandidate.keywords.map(k => k.trim()).filter(k => k),
+              updatedAt: new Date().toISOString()
+            };
+            console.log('Updating candidate:', updated);
+            setCandidates(prev => {
+              const updatedList = prev.map(c => 
+                c.id === updated.id ? updated : c
+              );
+              console.log('New candidates state:', updatedList);
+              return [...updatedList];
+            });
+            setShowModal(false);
+            setEditingCandidate(null);
+            console.log('Modal closed after updating candidate');
+          } catch (e) {
+            console.error('Error updating candidate:', e);
+          }
+        };
+
+        const deleteCandidate = (id) => {
+          try {
+            console.log('Deleting candidate with id:', id);
+            setCandidates(prev => {
+              const updated = prev.filter(c => c.id !== id);
+              console.log('New candidates state:', updated);
+              return [...updated];
+            });
+          } catch (e) {
+            console.error('Error deleting candidate:', e);
+          }
+        };
+
+        const filteredCandidates = candidates.filter(c => {
+          try {
+            return (
+              (c.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+              (c.function || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+              (c.company || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+              (c.comments || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+              (c.keywords || []).some(k => k.toLowerCase().includes(searchTerm.toLowerCase()))
+            );
+          } catch (e) {
+            console.error('Error filtering candidates:', e);
+            return false;
+          }
+        });
+
+        const recentCandidates = candidates
+          .slice()
+          .sort((a, b) => {
+            const aDate = new Date(a.updatedAt || a.createdAt);
+            const bDate = new Date(b.updatedAt || b.createdAt);
+            return bDate - aDate;
+          })
+          .slice(0, 6);
+
+        console.log('Rendering with recent candidates:', recentCandidates);
+
+        return (
+          <div className="min-h-screen bg-gray-100 p-6">
+            <div className="max-w-7xl mx-auto">
+              <h1 className="text-4xl font-extrabold mb-8 text-center text-gray-800">Recruiter Rolodex</h1>
+              <div className="mb-8 flex gap-4">
+                <input
+                  type="text"
+                  placeholder="Search candidates..."
+                  value={searchTerm}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    console.log('Search term updated:', e.target.value);
+                  }}
+                  className="flex-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-white"
+                />
+                <button
+                  onClick={() => {
+                    setShowModal(true);
+                    console.log('Opening add candidate modal');
+                  }}
+                  className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition shadow-md font-medium"
+                >
+                  Add Candidate
+                </button>
+              </div>
+              {showModal && (
+                <CandidateModal
+                  onClose={() => {
+                    setShowModal(false);
+                    setEditingCandidate(null);
+                    console.log('Closed modal');
+                  }}
+                  onSave={editingCandidate ? updateCandidate : addCandidate}
+                  candidate={editingCandidate}
+                />
+              )}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {(searchTerm ? filteredCandidates : recentCandidates).map(candidate => {
+                  console.log('Rendering candidate card:', candidate.name);
+                  return (
+                    <CandidateCard
+                      key={candidate.id}
+                      candidate={candidate}
+                      onEdit={() => {
+                        setEditingCandidate(candidate);
+                        setShowModal(true);
+                        console.log('Editing candidate:', candidate.name);
+                      }}
+                      onDelete={() => {
+                        deleteCandidate(candidate.id);
+                        console.log('Deleting candidate:', candidate.name);
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      function CandidateModal({ onClose, onSave, candidate }) {
+        const [formData, setFormData] = React.useState({
+          name: candidate?.name || '',
+          function: candidate?.function || '',
+          company: candidate?.company || '',
+          linkedin: candidate?.linkedin || '',
+          comments: candidate?.comments || '',
+          keywords: candidate?.keywords || [],
+        });
+        const [error, setError] = React.useState('');
+
+        const handleSubmit = (e) => {
+          e.preventDefault();
+          try {
+            if (!formData.name.trim() || !formData.function.trim() || !formData.company.trim()) {
+              setError('Name, Function, and Company are required.');
+              console.error('Validation failed:', formData);
+              return;
+            }
+            setError('');
+            console.log('Submitting form data:', formData);
+            onSave(formData);
+          } catch (e) {
+            console.error('Error submitting form:', e);
+            setError('Failed to save candidate. Please try again.');
+          }
+        };
+
+        const addKeyword = (keyword) => {
+          try {
+            if (formData.keywords.length < 10 && keyword.trim()) {
+              setFormData({
+                ...formData,
+                keywords: [...formData.keywords, keyword.trim()]
+              });
+              console.log('Added keyword:', keyword);
+            }
+          } catch (e) {
+            console.error('Error adding keyword:', e);
+          }
+        };
+
+        const removeKeyword = (index) => {
+          try {
+            setFormData({
+              ...formData,
+              keywords: formData.keywords.filter((_, i) => i !== index)
+            });
+            console.log('Removed keyword at index:', index);
+          } catch (e) {
+            console.error('Error removing keyword:', e);
+          }
+        };
+
+        return (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="bg-white p-8 rounded-xl w-full max-w-lg shadow-2xl">
+              <h2 className="text-2xl font-bold mb-6 text-gray-800">
+                {candidate ? 'Edit Candidate' : 'Add Candidate'}
+              </h2>
+              {error && (
+                <p className="text-red-500 mb-4 text-sm">{error}</p>
+              )}
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Function"
+                  value={formData.function}
+                  onChange={(e) => setFormData({ ...formData, function: e.target.value })}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Current Company"
+                  value={formData.company}
+                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+                  required
+                />
+                <input
+                  type="url"
+                  placeholder="LinkedIn Profile"
+                  value={formData.linkedin}
+                  onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+                />
+                <textarea
+                  placeholder="Recruiting Comments"
+                  value={formData.comments}
+                  onChange={(e) => setFormData({ ...formData, comments: e.target.value })}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+                  rows="4"
+                ></textarea>
+                <div>
+                  <div className="flex gap-3">
+                    <input
+                      type="text"
+                      placeholder="Add keyword (max 10)"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          addKeyword(e.target.value);
+                          e.target.value = '';
+                          e.preventDefault();
+                        }
+                      }}
+                      className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+                      disabled={formData.keywords.length >= 10}
+                    />
+                  </div>
+                  <div className="flex flex-wrap gap-2 mt-3">
+                    {formData.keywords.map((keyword, index) => (
+                      <span
+                        key={index}
+                        className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full flex items-center text-sm"
+                      >
+                        {keyword}
+                        <button
+                          type="button"
+                          onClick={() => removeKeyword(index)}
+                          className="ml-2 text-red-600 hover:text-red-800"
+                        >
+                          ×
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex justify-end gap-3">
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="px-5 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition font-medium"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
+                  >
+                    Save
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        );
+      }
+
+      function CandidateCard({ candidate, onEdit, onDelete }) {
+        return (
+          <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
+            <img
+              src={candidate.linkedin ? `https://api.dicebear.com/9.x/initials/svg?seed=${candidate.name}` : DEFAULT_PHOTO}
+              alt={candidate.name}
+              className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-gray-200"
+            />
+            <h3 className="text-lg font-semibold text-gray-800">{candidate.name}</h3>
+            <p className="text-gray-600 text-sm">{candidate.function}</p>
+            <p className="text-gray-600 text-sm">{candidate.company}</p>
+            {candidate.linkedin && (
+              <a
+                href={candidate.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:underline text-sm"
+              >
+                LinkedIn Profile
+              </a>
+            )}
+            <p className="text-gray-500 mt-2 text-sm">{candidate.comments}</p>
+            <div className="flex flex-wrap gap-2 mt-3">
+              {candidate.keywords.map((keyword, index) => (
+                <span
+                  key={index}
+                  className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs"
+                >
+                  {keyword}
+                </span>
+              ))}
+            </div>
+            <div className="flex justify-end gap-3 mt-4">
+              <button
+                onClick={onEdit}
+                className="text-blue-500 hover:text-blue-700 text-sm font-medium"
+              >
+                Edit
+              </button>
+              <button
+                onClick={onDelete}
+                className="text-red-500 hover:text-red-700 text-sm font-medium"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        );
+      }
+
+      console.log('Rendering application...');
+      ReactDOM.render(<App />, document.getElementById('root'));
+      console.log('Application rendered successfully');
+    } catch (e) {
+      console.error('Fatal error in application:', e.message, e.stack);
+      document.getElementById('root').innerHTML = `
+        <div style="text-align: center; color: red; padding: 20px;">
+          <h1>Error Loading Application</h1>
+          <p>Please check the console for details and ensure all scripts loaded correctly.</p>
+          <p>Try serving this file via an HTTP server (e.g., 'npx serve' or 'python -m http.server').</p>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
