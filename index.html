@@ -13,6 +13,27 @@
   <div id="root"></div>
   <script type="text/babel">
     console.log('Starting Recruiter Rolodex application at', new Date().toISOString());
+
+    // Check if CDN scripts are defined
+    console.log('Checking CDN scripts...');
+    try {
+      if (!window.React) throw new Error('React CDN script not loaded');
+      if (!window.ReactDOM) throw new Error('ReactDOM CDN script not loaded');
+      if (!window.Babel) throw new Error('Babel CDN script not loaded');
+      console.log('All CDN scripts loaded successfully');
+    } catch (e) {
+      console.error('CDN load error:', e.message, e.stack);
+      document.getElementById('root').innerHTML = `
+        <div style="text-align: center; color: red; padding: 20px;">
+          <h1>Error Loading Application</h1>
+          <p>CDN scripts failed to load: ${e.message}</p>
+          <p>Check your internet connection and try again.</p>
+          <p>Ensure you are serving this file via an HTTP server (e.g., 'npx serve' or 'python -m http.server').</p>
+        </div>
+      `;
+      throw e;
+    }
+
     const DEFAULT_PHOTO = 'https://via.placeholder.com/150?text=No+Photo';
 
     const sampleCandidates = [
