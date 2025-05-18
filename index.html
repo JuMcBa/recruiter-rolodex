@@ -8,33 +8,22 @@
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone@7.26.9/babel.min.js" crossorigin></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom Ripple Labs colors */
+    .ripple-blue { background-color: #00A9E0; }
+    .ripple-dark-blue { color: #003087; }
+    .ripple-dark-blue-bg { background-color: #003087; }
+    .ripple-white { background-color: #FFFFFF; }
+    .ripple-blue:hover { background-color: #0087B8; }
+    .ripple-dark-blue-bg:hover { background-color: #00255A; }
+  </style>
 </head>
 <body>
   <div id="root"></div>
   <script type="text/babel">
     console.log('Starting Recruiter Rolodex application at', new Date().toISOString());
-
-    // Check if CDN scripts are defined
-    console.log('Checking CDN scripts...');
-    try {
-      if (!window.React) throw new Error('React CDN script not loaded');
-      if (!window.ReactDOM) throw new Error('ReactDOM CDN script not loaded');
-      if (!window.Babel) throw new Error('Babel CDN script not loaded');
-      console.log('All CDN scripts loaded successfully');
-    } catch (e) {
-      console.error('CDN load error:', e.message, e.stack);
-      document.getElementById('root').innerHTML = `
-        <div style="text-align: center; color: red; padding: 20px;">
-          <h1>Error Loading Application</h1>
-          <p>CDN scripts failed to load: ${e.message}</p>
-          <p>Check your internet connection and try again.</p>
-          <p>Ensure you are serving this file via an HTTP server (e.g., 'npx serve' or 'python -m http.server').</p>
-        </div>
-      `;
-      throw e;
-    }
-
     const DEFAULT_PHOTO = 'https://via.placeholder.com/150?text=No+Photo';
+    const RIPPLE_LOGO = 'https://upload.wikimedia.org/wikipedia/commons/8/88/Ripple_logo.svg'; // Public Ripple Labs logo
 
     const sampleCandidates = [
       { id: 1, name: "Alice Johnson", function: "Software Engineer", company: "TechTrend Innovations", linkedin: "https://linkedin.com/in/alicejohnson", comments: "Strong coding skills.", keywords: ["React", "Node.js"], rating: "Gold", remarks: [{ id: 1, text: "Excellent team player", createdAt: "2025-05-01T10:00:00Z" }], createdAt: "2025-05-01T10:00:00Z", updatedAt: "2025-05-01T10:00:00Z" },
@@ -52,7 +41,7 @@
       { id: 13, name: "Mia Rodriguez", function: "Content Writer", company: "WordSmith Media", linkedin: "https://linkedin.com/in/miarodriguez", comments: "Engaging content.", keywords: ["Content Writing", "SEO"], rating: "Silver", remarks: [{ id: 1, text: "Great writer", createdAt: "2025-05-13T13:00:00Z" }], createdAt: "2025-05-13T13:00:00Z", updatedAt: "2025-05-13T13:00:00Z" },
       { id: 14, name: "Noah Davis", function: "Cloud Architect", company: "SkyHigh Technologies", linkedin: "https://linkedin.com/in/noahdavis", comments: "Scalable solutions.", keywords: ["Azure"], rating: "Gold", remarks: [{ id: 1, text: "Expert architect", createdAt: "2025-05-14T15:00:00Z" }], createdAt: "2025-05-14T15:00:00Z", updatedAt: "2025-05-14T15:00:00Z" },
       { id: 15, name: "Olivia Clark", function: "Graphic Designer", company: "PixelPerfect Studio", linkedin: "https://linkedin.com/in/oliviaclark", comments: "Creative designs.", keywords: ["Graphic Design"], rating: "Bronze", remarks: [{ id: 1, text: "Promising talent", createdAt: "2025-05-15T10:00:00Z" }], createdAt: "2025-05-15T10:00:00Z", updatedAt: "2025-05-15T10:00:00Z" },
-      { id: 16, name: "Peter Harris", function: "Project Manager", company: "PlanWise Solutions", linkedin: "https://linkedin.com/in/peterharris", comments: "Certified PMP.", keywords: ["Project Management"], rating: "Silver", remarks: [{ id: 1, text: "Organized leader", createdAt: "2025-05-16T12:00:00Z" }], createdAt: "2025-05-16T12:00:00Z", updatedAt: "2025-05-16T12:00:00Z" },
+      { id: 16, name: "Peter Harris", function: "Project Manager", company: "PlanWise Solutions", linkedin: "https://linkedin.com/in/peterharris", comments: "Certified PMP.", keywords: ["Project Management"], rating: "Silver", remarks: [{ id: 1, text: "Organized leader", createdAt: "2025-05-16T12:00:00Z" }], createdAt: "2025-05-16T12:00:00Z", createdAt: "2025-05-16T12:00:00Z", updatedAt: "2025-05-16T12:00:00Z" },
       { id: 17, name: "Quinn Lopez", function: "AI Engineer", company: "IntelliCore Labs", linkedin: "https://linkedin.com/in/quinnlopez", comments: "Deep learning expert.", keywords: ["AI", "TensorFlow"], rating: "Gold", remarks: [{ id: 1, text: "Innovative models", createdAt: "2025-05-17T14:00:00Z" }], createdAt: "2025-05-17T14:00:00Z", updatedAt: "2025-05-17T14:00:00Z" },
       { id: 18, name: "Rachel White", function: "Sales Manager", company: "GrowFast Enterprises", linkedin: "https://linkedin.com/in/rachelwhite", comments: "Strong client skills.", keywords: ["Sales", "CRM"], rating: "Silver", remarks: [{ id: 1, text: "Top performer", createdAt: "2025-05-18T09:00:00Z" }], createdAt: "2025-05-18T09:00:00Z", updatedAt: "2025-05-18T09:00:00Z" },
       { id: 19, name: "Samuel Green", function: "Database Administrator", company: "DataVault Systems", linkedin: "https://linkedin.com/in/samuelgreen", comments: "SQL optimizer.", keywords: ["SQL"], rating: "Bronze", remarks: [{ id: 1, text: "Reliable admin", createdAt: "2025-05-18T11:00:00Z" }], createdAt: "2025-05-18T11:00:00Z", updatedAt: "2025-05-18T11:00:00Z" },
@@ -61,9 +50,9 @@
 
     try {
       console.log('Loading CDN scripts...');
-      if (!window.React || !window.ReactDOM || !window.Babel) {
-        throw new Error('One or more CDN scripts failed to load (React, ReactDOM, Babel).');
-      }
+      if (!window.React) throw new Error('React CDN script not loaded');
+      if (!window.ReactDOM) throw new Error('ReactDOM CDN script not loaded');
+      if (!window.Babel) throw new Error('Babel CDN script not loaded');
       console.log('CDN scripts loaded successfully');
 
       function App() {
@@ -82,8 +71,11 @@
           }
         });
         const [searchTerm, setSearchTerm] = React.useState('');
+        const [ratingFilter, setRatingFilter] = React.useState('All');
         const [showModal, setShowModal] = React.useState(false);
+        const [modalMode, setModalMode] = React.useState('add'); // 'add', 'edit', 'view'
         const [editingCandidate, setEditingCandidate] = React.useState(null);
+        const [viewingCandidate, setViewingCandidate] = React.useState(null);
 
         React.useEffect(() => {
           try {
@@ -178,13 +170,14 @@
 
         const filteredCandidates = candidates.filter(c => {
           try {
-            return (
+            const matchesSearch =
               (c.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
               (c.function || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
               (c.company || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
               (c.comments || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-              (c.keywords || []).some(k => k.toLowerCase().includes(searchTerm.toLowerCase()))
-            );
+              (c.keywords || []).some(k => k.toLowerCase().includes(searchTerm.toLowerCase()));
+            const matchesRating = ratingFilter === 'All' || c.rating === ratingFilter;
+            return matchesSearch && matchesRating;
           } catch (e) {
             console.error('Error filtering candidates:', e.message, e.stack);
             return false;
@@ -200,14 +193,14 @@
           })
           .slice(0, 6);
 
-        console.log('Rendering with showModal:', showModal, 'recent candidates:', recentCandidates.map(c => c.name));
+        console.log('Rendering with showModal:', showModal, 'modalMode:', modalMode, 'ratingFilter:', ratingFilter, 'recent candidates:', recentCandidates.map(c => c.name));
 
         return (
           <div className="min-h-screen bg-gray-100 p-6">
             <div className="max-w-7xl mx-auto">
-              <h1 className="text-4xl font-extrabold mb-8 text-center text-gray-800">Recruiter Rolodex</h1>
+              <h1 className="text-4xl font-extrabold mb-8 text-center ripple-dark-blue">Recruiter Rolodex</h1>
               {!showModal && (
-                <div className="mb-8 flex gap-4">
+                <div className="mb-8 flex gap-4 items-center">
                   <input
                     type="text"
                     placeholder="Search candidates..."
@@ -216,14 +209,28 @@
                       setSearchTerm(e.target.value);
                       console.log('Search term updated:', e.target.value);
                     }}
-                    className="flex-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm bg-white"
+                    className="flex-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#00A9E0] shadow-sm bg-white"
                   />
+                  <select
+                    value={ratingFilter}
+                    onChange={(e) => {
+                      setRatingFilter(e.target.value);
+                      console.log('Rating filter updated:', e.target.value);
+                    }}
+                    className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#00A9E0] shadow-sm bg-white"
+                  >
+                    <option value="All">All Ratings</option>
+                    <option value="Bronze">Bronze</option>
+                    <option value="Silver">Silver</option>
+                    <option value="Gold">Gold</option>
+                  </select>
                   <button
                     onClick={() => {
+                      setModalMode('add');
                       setShowModal(true);
                       console.log('Opening add candidate modal');
                     }}
-                    className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition shadow-md font-medium"
+                    className="ripple-blue text-white px-6 py-3 rounded-lg hover:ripple-blue shadow-md font-medium"
                   >
                     Add Candidate
                   </button>
@@ -231,25 +238,35 @@
               )}
               {showModal && (
                 <CandidateModal
+                  mode={modalMode}
+                  candidate={modalMode === 'view' ? viewingCandidate : editingCandidate}
                   onClose={() => {
                     setShowModal(false);
                     setEditingCandidate(null);
+                    setViewingCandidate(null);
+                    setModalMode('add');
                     console.log('Closed modal');
                   }}
-                  onSave={editingCandidate ? updateCandidate : addCandidate}
-                  candidate={editingCandidate}
+                  onSave={modalMode === 'edit' ? updateCandidate : addCandidate}
                 />
               )}
               {!showModal && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {(searchTerm ? filteredCandidates : recentCandidates).map(candidate => {
+                  {(searchTerm || ratingFilter !== 'All' ? filteredCandidates : recentCandidates).map(candidate => {
                     console.log('Rendering candidate card:', candidate.name, 'ID:', candidate.id);
                     return (
                       <CandidateCard
                         key={candidate.id}
                         candidate={candidate}
+                        onView={() => {
+                          setViewingCandidate(candidate);
+                          setModalMode('view');
+                          setShowModal(true);
+                          console.log('Viewing candidate:', candidate.name);
+                        }}
                         onEdit={() => {
                           setEditingCandidate(candidate);
+                          setModalMode('edit');
                           setShowModal(true);
                           console.log('Editing candidate:', candidate.name);
                         }}
@@ -262,15 +279,18 @@
                   })}
                 </div>
               )}
-              {!showModal && !searchTerm && recentCandidates.length === 0 && (
+              {!showModal && !searchTerm && ratingFilter === 'All' && recentCandidates.length === 0 && (
                 <p className="text-center text-gray-500 mt-4">No recent candidates available.</p>
               )}
+              <div className="mt-8 flex justify-center">
+                <img src={RIPPLE_LOGO} alt="Ripple Labs Logo" className="h-12" />
+              </div>
             </div>
           </div>
         );
       }
 
-      function CandidateModal({ onClose, onSave, candidate }) {
+      function CandidateModal({ mode, candidate, onClose, onSave }) {
         const [formData, setFormData] = React.useState({
           name: candidate?.name || '',
           function: candidate?.function || '',
@@ -396,202 +416,276 @@
         return (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white p-8 rounded-xl w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto">
-              <h2 className="text-2xl font-bold mb-6 text-gray-800">
-                {candidate ? 'Edit Candidate' : 'Add Candidate'}
+              <h2 className="text-2xl font-bold mb-6 ripple-dark-blue">
+                {mode === 'view' ? 'View Candidate' : mode === 'edit' ? 'Edit Candidate' : 'Add Candidate'}
               </h2>
-              {error && (
+              {error && mode !== 'view' && (
                 <p className="text-red-500 mb-4 text-sm">{error}</p>
               )}
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <input
-                  type="text"
-                  placeholder="Name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
-                  required
-                />
-                <input
-                  type="text"
-                  placeholder="Function"
-                  value={formData.function}
-                  onChange={(e) => setFormData({ ...formData, function: e.target.value })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
-                  required
-                />
-                <input
-                  type="text"
-                  placeholder="Current Company"
-                  value={formData.company}
-                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
-                  required
-                />
-                <input
-                  type="url"
-                  placeholder="LinkedIn Profile"
-                  value={formData.linkedin}
-                  onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
-                />
-                <textarea
-                  placeholder="Recruiting Comments"
-                  value={formData.comments}
-                  onChange={(e) => setFormData({ ...formData, comments: e.target.value })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
-                  rows="4"
-                ></textarea>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Rating</label>
-                  <div className="flex items-center gap-4">
-                    <input
-                      type="range"
-                      min="1"
-                      max="3"
-                      value={formData.rating === 'Gold' ? 3 : formData.rating === 'Silver' ? 2 : 1}
-                      onChange={(e) => {
-                        const value = parseInt(e.target.value);
-                        const rating = value === 3 ? 'Gold' : value === 2 ? 'Silver' : 'Bronze';
-                        setFormData({ ...formData, rating });
-                        console.log('Rating updated:', rating);
-                      }}
-                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                    />
+              {mode === 'view' ? (
+                <div className="space-y-5">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Name</label>
+                    <p className="text-gray-900">{formData.name}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Function</label>
+                    <p className="text-gray-900">{formData.function}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Current Company</label>
+                    <p className="text-gray-900">{formData.company}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">LinkedIn Profile</label>
+                    {formData.linkedin ? (
+                      <a href={formData.linkedin} target="_blank" rel="noopener noreferrer" className="text-[#00A9E0] hover:underline">
+                        {formData.linkedin}
+                      </a>
+                    ) : (
+                      <p className="text-gray-500">None</p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Recruiting Comments</label>
+                    <p className="text-gray-900">{formData.comments || 'None'}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Rating</label>
                     <span className={`px-3 py-1 rounded-full text-sm font-medium ${ratingColors[formData.rating]}`}>
                       {formData.rating}
                     </span>
                   </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Keywords (max 10)</label>
-                  <div className="flex gap-3">
-                    <input
-                      type="text"
-                      placeholder="Add keyword"
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                          addKeyword(e.target.value);
-                          e.target.value = '';
-                          e.preventDefault();
-                        }
-                      }}
-                      className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
-                      disabled={formData.keywords.length >= 10}
-                    />
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Keywords</label>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {formData.keywords.length > 0 ? (
+                        formData.keywords.map((keyword, index) => (
+                          <span key={index} className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
+                            {keyword}
+                          </span>
+                        ))
+                      ) : (
+                        <p className="text-gray-500">None</p>
+                      )}
+                    </div>
                   </div>
-                  <div className="flex flex-wrap gap-2 mt-3">
-                    {formData.keywords.map((keyword, index) => (
-                      <span
-                        key={index}
-                        className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full flex items-center text-sm"
-                      >
-                        {keyword}
-                        <button
-                          type="button"
-                          onClick={() => removeKeyword(index)}
-                          className="ml-2 text-red-600 hover:text-red-800"
-                        >
-                          ×
-                        </button>
-                      </span>
-                    ))}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Remarks</label>
+                    {formData.remarks.length > 0 ? (
+                      <ul className="space-y-2 mt-2">
+                        {formData.remarks.map(remark => (
+                          <li key={remark.id} className="text-sm text-gray-700">
+                            {remark.text} <span className="text-gray-500 text-xs">({new Date(remark.createdAt).toLocaleString()})</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-gray-500 mt-2">None</p>
+                    )}
                   </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Remarks</label>
-                  <div className="flex gap-3 mb-3">
-                    <input
-                      type="text"
-                      placeholder="Add remark"
-                      value={newRemark}
-                      onChange={(e) => setNewRemark(e.target.value)}
-                      className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
-                    />
+                  <div className="flex justify-end">
                     <button
                       type="button"
-                      onClick={addRemark}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-                      disabled={!newRemark.trim()}
+                      onClick={onClose}
+                      className="px-5 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition font-medium"
                     >
-                      Add
+                      Close
                     </button>
                   </div>
-                  {formData.remarks.length > 0 && (
-                    <ul className="space-y-2">
-                      {formData.remarks.map(remark => (
-                        <li key={remark.id} className="flex items-center gap-2">
-                          {editingRemarkId === remark.id ? (
-                            <div className="flex-1 flex gap-2">
-                              <input
-                                type="text"
-                                value={editingRemarkText}
-                                onChange={(e) => setEditingRemarkText(e.target.value)}
-                                className="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
-                              />
-                              <button
-                                type="button"
-                                onClick={saveEditedRemark}
-                                className="px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700"
-                                disabled={!editingRemarkText.trim()}
-                              >
-                                Save
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => setEditingRemarkId(null)}
-                                className="px-3 py-1 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300"
-                              >
-                                Cancel
-                              </button>
-                            </div>
-                          ) : (
-                            <>
-                              <span className="flex-1 text-sm text-gray-700">
-                                {remark.text} <span className="text-gray-500 text-xs">({new Date(remark.createdAt).toLocaleString()})</span>
-                              </span>
-                              <button
-                                type="button"
-                                onClick={() => editRemark(remark.id, remark.text)}
-                                className="text-blue-500 hover:text-blue-700 text-sm"
-                              >
-                                Edit
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => removeRemark(remark.id)}
-                                className="text-red-500 hover:text-red-700 text-sm"
-                              >
-                                Delete
-                              </button>
-                            </>
-                          )}
-                        </li>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00A9E0] bg-white"
+                    required
+                  />
+                  <input
+                    type="text"
+                    placeholder="Function"
+                    value={formData.function}
+                    onChange={(e) => setFormData({ ...formData, function: e.target.value })}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00A9E0] bg-white"
+                    required
+                  />
+                  <input
+                    type="text"
+                    placeholder="Current Company"
+                    value={formData.company}
+                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00A9E0] bg-white"
+                    required
+                  />
+                  <input
+                    type="url"
+                    placeholder="LinkedIn Profile"
+                    value={formData.linkedin}
+                    onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00A9E0] bg-white"
+                  />
+                  <textarea
+                    placeholder="Recruiting Comments"
+                    value={formData.comments}
+                    onChange={(e) => setFormData({ ...formData, comments: e.target.value })}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00A9E0] bg-white"
+                    rows="4"
+                  ></textarea>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Rating</label>
+                    <div className="flex items-center gap-4">
+                      <input
+                        type="range"
+                        min="1"
+                        max="3"
+                        value={formData.rating === 'Gold' ? 3 : formData.rating === 'Silver' ? 2 : 1}
+                        onChange={(e) => {
+                          const value = parseInt(e.target.value);
+                          const rating = value === 3 ? 'Gold' : value === 2 ? 'Silver' : 'Bronze';
+                          setFormData({ ...formData, rating });
+                          console.log('Rating updated:', rating);
+                        }}
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                      />
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${ratingColors[formData.rating]}`}>
+                        {formData.rating}
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Keywords (max 10)</label>
+                    <div className="flex gap-3">
+                      <input
+                        type="text"
+                        placeholder="Add keyword"
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            addKeyword(e.target.value);
+                            e.target.value = '';
+                            e.preventDefault();
+                          }
+                        }}
+                        className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00A9E0] bg-white"
+                        disabled={formData.keywords.length >= 10}
+                      />
+                    </div>
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {formData.keywords.map((keyword, index) => (
+                        <span
+                          key={index}
+                          className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full flex items-center text-sm"
+                        >
+                          {keyword}
+                          <button
+                            type="button"
+                            onClick={() => removeKeyword(index)}
+                            className="ml-2 text-red-600 hover:text-red-800"
+                          >
+                            ×
+                          </button>
+                        </span>
                       ))}
-                    </ul>
-                  )}
-                </div>
-                <div className="flex justify-end gap-3">
-                  <button
-                    type="button"
-                    onClick={onClose}
-                    className="px-5 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition font-medium"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
-                  >
-                    Save
-                  </button>
-                </div>
-              </form>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Remarks</label>
+                    <div className="flex gap-3 mb-3">
+                      <input
+                        type="text"
+                        placeholder="Add remark"
+                        value={newRemark}
+                        onChange={(e) => setNewRemark(e.target.value)}
+                        className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00A9E0] bg-white"
+                      />
+                      <button
+                        type="button"
+                        onClick={addRemark}
+                        className="px-4 py-2 ripple-blue text-white rounded-lg hover:ripple-blue transition"
+                        disabled={!newRemark.trim()}
+                      >
+                        Add
+                      </button>
+                    </div>
+                    {formData.remarks.length > 0 && (
+                      <ul className="space-y-2">
+                        {formData.remarks.map(remark => (
+                          <li key={remark.id} className="flex items-center gap-2">
+                            {editingRemarkId === remark.id ? (
+                              <div className="flex-1 flex gap-2">
+                                <input
+                                  type="text"
+                                  value={editingRemarkText}
+                                  onChange={(e) => setEditingRemarkText(e.target.value)}
+                                  className="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00A9E0] bg-white"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={saveEditedRemark}
+                                  className="px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                                  disabled={!editingRemarkText.trim()}
+                                >
+                                  Save
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => setEditingRemarkId(null)}
+                                  className="px-3 py-1 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300"
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                            ) : (
+                              <>
+                                <span className="flex-1 text-sm text-gray-700">
+                                  {remark.text} <span className="text-gray-500 text-xs">({new Date(remark.createdAt).toLocaleString()})</span>
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => editRemark(remark.id, remark.text)}
+                                  className="text-[#00A9E0] hover:text-[#0087B8] text-sm"
+                                >
+                                  Edit
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => removeRemark(remark.id)}
+                                  className="text-red-500 hover:text-red-700 text-sm"
+                                >
+                                  Delete
+                                </button>
+                              </>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                  <div className="flex justify-end gap-3">
+                    <button
+                      type="button"
+                      onClick={onClose}
+                      className="px-5 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition font-medium"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-5 py-2 ripple-blue text-white rounded-lg hover:ripple-blue transition font-medium"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </form>
+              )}
             </div>
           </div>
         );
       }
 
-      function CandidateCard({ candidate, onEdit, onDelete }) {
+      function CandidateCard({ candidate, onView, onEdit, onDelete }) {
         const ratingColors = {
           Gold: 'bg-yellow-400 text-yellow-900 border-yellow-500',
           Silver: 'bg-gray-400 text-gray-900 border-gray-500',
@@ -618,7 +712,7 @@
                 href={candidate.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-500 hover:underline text-sm"
+                className="text-[#00A9E0] hover:underline text-sm"
               >
                 LinkedIn Profile
               </a>
@@ -636,8 +730,14 @@
             </div>
             <div className="flex justify-end gap-3 mt-4">
               <button
+                onClick={onView}
+                className="text-[#00A9E0] hover:text-[#0087B8] text-sm font-medium"
+              >
+                View
+              </button>
+              <button
                 onClick={onEdit}
-                className="text-blue-500 hover:text-blue-700 text-sm font-medium"
+                className="text-[#00A9E0] hover:text-[#0087B8] text-sm font-medium"
               >
                 Edit
               </button>
