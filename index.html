@@ -16,31 +16,31 @@
     const DEFAULT_PHOTO = 'https://via.placeholder.com/150?text=No+Photo';
 
     const sampleCandidates = [
-      { id: 1, name: "Alice Johnson", function: "Software Engineer", company: "TechTrend Innovations", linkedin: "https://linkedin.com/in/alicejohnson", comments: "Strong coding skills, experienced in React and Node.js.", keywords: ["React", "Node.js", "JavaScript", "Agile"], createdAt: "2025-05-01T10:00:00Z", updatedAt: "2025-05-01T10:00:00Z" },
-      { id: 2, name: "Bob Martinez", function: "Product Manager", company: "GrowEasy Solutions", linkedin: "https://linkedin.com/in/bobmartinez", comments: "Excellent at cross-functional collaboration.", keywords: ["Product Management", "Scrum", "UX", "Strategy"], createdAt: "2025-05-02T12:00:00Z", updatedAt: "2025-05-02T12:00:00Z" },
-      { id: 3, name: "Clara Nguyen", function: "Data Scientist", company: "DataCore Analytics", linkedin: "https://linkedin.com/in/claranguyen", comments: "Expert in machine learning and Python.", keywords: ["Python", "Machine Learning", "SQL", "Statistics"], createdAt: "2025-05-03T14:00:00Z", updatedAt: "2025-05-03T14:00:00Z" },
-      { id: 4, name: "David Kim", function: "UX Designer", company: "CreativeLabs", linkedin: "https://linkedin.com/in/davidkim", comments: "Skilled in Figma and user research.", keywords: ["UX Design", "Figma", "User Research", "Prototyping"], createdAt: "2025-05-04T09:00:00Z", updatedAt: "2025-05-04T09:00:00Z" },
-      { id: 5, name: "Emma Patel", function: "DevOps Engineer", company: "CloudPeak Systems", linkedin: "https://linkedin.com/in/emmapatel", comments: "Proficient in AWS and Kubernetes.", keywords: ["AWS", "Kubernetes", "CI/CD", "Docker"], createdAt: "2025-05-05T11:00:00Z", updatedAt: "2025-05-05T11:00:00Z" },
-      { id: 6, name: "Frank Wilson", function: "Marketing Manager", company: "BrandBoost Inc.", linkedin: "https://linkedin.com/in/frankwilson", comments: "Creative campaign strategist.", keywords: ["Marketing", "SEO", "Content Strategy", "Analytics"], createdAt: "2025-05-06T13:00:00Z", updatedAt: "2025-05-06T13:00:00Z" },
-      { id: 7, name: "Grace Lee", function: "Frontend Developer", company: "WebWave Technologies", linkedin: "https://linkedin.com/in/gracelee", comments: "Specializes in Vue.js and TypeScript.", keywords: ["Vue.js", "TypeScript", "CSS", "Responsive Design"], createdAt: "2025-05-07T15:00:00Z", updatedAt: "2025-05-07T15:00:00Z" },
-      { id: 8, name: "Henry Brown", function: "Cybersecurity Analyst", company: "SecureNet Solutions", linkedin: "https://linkedin.com/in/henrybrown", comments: "Experienced in threat analysis.", keywords: ["Cybersecurity", "Penetration Testing", "Firewalls"], createdAt: "2025-05-08T10:00:00Z", updatedAt: "2025-05-08T10:00:00Z" },
-      { id: 9, name: "Isabella Garcia", function: "HR Specialist", company: "PeopleFirst Corp", linkedin: "https://linkedin.com/in/isabellagarcia", comments: "Strong in talent acquisition.", keywords: ["HR", "Recruiting", "Employee Relations", "Onboarding"], createdAt: "2025-05-09T12:00:00Z", updatedAt: "2025-05-09T12:00:00Z" },
-      { id: 10, name: "James Thompson", function: "Backend Developer", company: "CodeCraft Systems", linkedin: "https://linkedin.com/in/jamesthompson", comments: "Expert in Java and Spring Boot.", keywords: ["Java", "Spring Boot", "REST APIs", "PostgreSQL"], createdAt: "2025-05-10T14:00:00Z", updatedAt: "2025-05-10T14:00:00Z" },
-      { id: 11, name: "Katherine Evans", function: "Business Analyst", company: "InsightConsulting", linkedin: "https://linkedin.com/in/katherineevans", comments: "Great at requirement gathering.", keywords: ["Business Analysis", "Agile", "Stakeholder Management"], createdAt: "2025-05-11T09:00:00Z", updatedAt: "2025-05-11T09:00:00Z" },
-      { id: 12, name: "Liam Carter", function: "Mobile Developer", company: "AppVenture Studio", linkedin: "https://linkedin.com/in/liamcarter", comments: "Skilled in Flutter and Swift.", keywords: ["Flutter", "Swift", "iOS", "Android"], createdAt: "2025-05-12T11:00:00Z", updatedAt: "2025-05-12T11:00:00Z" },
-      { id: 13, name: "Mia Rodriguez", function: "Content Writer", company: "WordSmith Media", linkedin: "https://linkedin.com/in/miarodriguez", comments: "Produces engaging blog content.", keywords: ["Content Writing", "SEO", "Blogging", "Copywriting"], createdAt: "2025-05-13T13:00:00Z", updatedAt: "2025-05-13T13:00:00Z" },
-      { id: 14, name: "Noah Davis", function: "Cloud Architect", company: "SkyHigh Technologies", linkedin: "https://linkedin.com/in/noahdavis", comments: "Designed scalable cloud solutions.", keywords: ["Azure", "Cloud Architecture", "Microservices"], createdAt: "2025-05-14T15:00:00Z", updatedAt: "2025-05-14T15:00:00Z" },
-      { id: 15, name: "Olivia Clark", function: "Graphic Designer", company: "PixelPerfect Studio", linkedin: "https://linkedin.com/in/oliviaclark", comments: "Creative with Adobe Suite.", keywords: ["Graphic Design", "Adobe Illustrator", "Branding"], createdAt: "2025-05-15T10:00:00Z", updatedAt: "2025-05-15T10:00:00Z" },
-      { id: 16, name: "Peter Harris", function: "Project Manager", company: "PlanWise Solutions", linkedin: "https://linkedin.com/in/peterharris", comments: "Certified PMP, great leader.", keywords: ["Project Management", "PMP", "Agile", "Risk Management"], createdAt: "2025-05-16T12:00:00Z", updatedAt: "2025-05-16T12:00:00Z" },
-      { id: 17, name: "Quinn Lopez", function: "AI Engineer", company: "IntelliCore Labs", linkedin: "https://linkedin.com/in/quinnlopez", comments: "Works on deep learning models.", keywords: ["AI", "Deep Learning", "TensorFlow", "Python"], createdAt: "2025-05-17T14:00:00Z", updatedAt: "2025-05-17T14:00:00Z" },
-      { id: 18, name: "Rachel White", function: "Sales Manager", company: "GrowFast Enterprises", linkedin: "https://linkedin.com/in/rachelwhite", comments: "Strong client relationship skills.", keywords: ["Sales", "CRM", "Negotiation", "B2B"], createdAt: "2025-05-18T09:00:00Z", updatedAt: "2025-05-18T09:00:00Z" },
-      { id: 19, name: "Samuel Green", function: "Database Administrator", company: "DataVault Systems", linkedin: "https://linkedin.com/in/samuelgreen", comments: "Optimizes SQL databases.", keywords: ["SQL", "Database Administration", "MySQL", "Performance Tuning"], createdAt: "2025-05-18T11:00:00Z", updatedAt: "2025-05-18T11:00:00Z" },
-      { id: 20, name: "Tara Adams", function: "Quality Assurance Engineer", company: "TestRight Solutions", linkedin: "https://linkedin.com/in/taraadams", comments: "Experienced in automated testing.", keywords: ["QA", "Selenium", "Test Automation", "JIRA"], createdAt: "2025-05-18T13:00:00Z", updatedAt: "2025-05-18T13:00:00Z" }
+      { id: 1, name: "Alice Johnson", function: "Software Engineer", company: "TechTrend Innovations", linkedin: "https://linkedin.com/in/alicejohnson", comments: "Strong coding skills.", keywords: ["React", "Node.js"], rating: "Gold", remarks: [{ id: 1, text: "Excellent team player", createdAt: "2025-05-01T10:00:00Z" }], createdAt: "2025-05-01T10:00:00Z", updatedAt: "2025-05-01T10:00:00Z" },
+      { id: 2, name: "Bob Martinez", function: "Product Manager", company: "GrowEasy Solutions", linkedin: "https://linkedin.com/in/bobmartinez", comments: "Great collaborator.", keywords: ["Scrum", "UX"], rating: "Silver", remarks: [{ id: 1, text: "Strong leadership", createdAt: "2025-05-02T12:00:00Z" }], createdAt: "2025-05-02T12:00:00Z", updatedAt: "2025-05-02T12:00:00Z" },
+      { id: 3, name: "Clara Nguyen", function: "Data Scientist", company: "DataCore Analytics", linkedin: "https://linkedin.com/in/claranguyen", comments: "ML expert.", keywords: ["Python", "Machine Learning"], rating: "Gold", remarks: [{ id: 1, text: "Innovative approach", createdAt: "2025-05-03T14:00:00Z" }], createdAt: "2025-05-03T14:00:00Z", updatedAt: "2025-05-03T14:00:00Z" },
+      { id: 4, name: "David Kim", function: "UX Designer", company: "CreativeLabs", linkedin: "https://linkedin.com/in/davidkim", comments: "Skilled in Figma.", keywords: ["UX Design", "Figma"], rating: "Bronze", remarks: [{ id: 1, text: "Needs more experience", createdAt: "2025-05-04T09:00:00Z" }], createdAt: "2025-05-04T09:00:00Z", updatedAt: "2025-05-04T09:00:00Z" },
+      { id: 5, name: "Emma Patel", function: "DevOps Engineer", company: "CloudPeak Systems", linkedin: "https://linkedin.com/in/emmapatel", comments: "AWS proficient.", keywords: ["AWS", "Kubernetes"], rating: "Silver", remarks: [{ id: 1, text: "Reliable", createdAt: "2025-05-05T11:00:00Z" }], createdAt: "2025-05-05T11:00:00Z", updatedAt: "2025-05-05T11:00:00Z" },
+      { id: 6, name: "Frank Wilson", function: "Marketing Manager", company: "BrandBoost Inc.", linkedin: "https://linkedin.com/in/frankwilson", comments: "Creative strategist.", keywords: ["Marketing", "SEO"], rating: "Gold", remarks: [{ id: 1, text: "Great campaigns", createdAt: "2025-05-06T13:00:00Z" }], createdAt: "2025-05-06T13:00:00Z", updatedAt: "2025-05-06T13:00:00Z" },
+      { id: 7, name: "Grace Lee", function: "Frontend Developer", company: "WebWave Technologies", linkedin: "https://linkedin.com/in/gracelee", comments: "Vue.js expert.", keywords: ["Vue.js", "TypeScript"], rating: "Silver", remarks: [{ id: 1, text: "Fast learner", createdAt: "2025-05-07T15:00:00Z" }], createdAt: "2025-05-07T15:00:00Z", updatedAt: "2025-05-07T15:00:00Z" },
+      { id: 8, name: "Henry Brown", function: "Cybersecurity Analyst", company: "SecureNet Solutions", linkedin: "https://linkedin.com/in/henrybrown", comments: "Threat analysis.", keywords: ["Cybersecurity"], rating: "Bronze", remarks: [{ id: 1, text: "Detail-oriented", createdAt: "2025-05-08T10:00:00Z" }], createdAt: "2025-05-08T10:00:00Z", updatedAt: "2025-05-08T10:00:00Z" },
+      { id: 9, name: "Isabella Garcia", function: "HR Specialist", company: "PeopleFirst Corp", linkedin: "https://linkedin.com/in/isabellagarcia", comments: "Talent acquisition.", keywords: ["HR", "Recruiting"], rating: "Gold", remarks: [{ id: 1, text: "Effective recruiter", createdAt: "2025-05-09T12:00:00Z" }], createdAt: "2025-05-09T12:00:00Z", updatedAt: "2025-05-09T12:00:00Z" },
+      { id: 10, name: "James Thompson", function: "Backend Developer", company: "CodeCraft Systems", linkedin: "https://linkedin.com/in/jamesthompson", comments: "Java expert.", keywords: ["Java", "Spring Boot"], rating: "Silver", remarks: [{ id: 1, text: "Solid coder", createdAt: "2025-05-10T14:00:00Z" }], createdAt: "2025-05-10T14:00:00Z", updatedAt: "2025-05-10T14:00:00Z" },
+      { id: 11, name: "Katherine Evans", function: "Business Analyst", company: "InsightConsulting", linkedin: "https://linkedin.com/in/katherineevans", comments: "Requirement gathering.", keywords: ["Business Analysis"], rating: "Bronze", remarks: [{ id: 1, text: "Good communicator", createdAt: "2025-05-11T09:00:00Z" }], createdAt: "2025-05-11T09:00:00Z", updatedAt: "2025-05-11T09:00:00Z" },
+      { id: 12, name: "Liam Carter", function: "Mobile Developer", company: "AppVenture Studio", linkedin: "https://linkedin.com/in/liamcarter", comments: "Flutter expert.", keywords: ["Flutter", "Swift"], rating: "Gold", remarks: [{ id: 1, text: "Creative apps", createdAt: "2025-05-12T11:00:00Z" }], createdAt: "2025-05-12T11:00:00Z", updatedAt: "2025-05-12T11:00:00Z" },
+      { id: 13, name: "Mia Rodriguez", function: "Content Writer", company: "WordSmith Media", linkedin: "https://linkedin.com/in/miarodriguez", comments: "Engaging content.", keywords: ["Content Writing", "SEO"], rating: "Silver", remarks: [{ id: 1, text: "Great writer", createdAt: "2025-05-13T13:00:00Z" }], createdAt: "2025-05-13T13:00:00Z", updatedAt: "2025-05-13T13:00:00Z" },
+      { id: 14, name: "Noah Davis", function: "Cloud Architect", company: "SkyHigh Technologies", linkedin: "https://linkedin.com/in/noahdavis", comments: "Scalable solutions.", keywords: ["Azure"], rating: "Gold", remarks: [{ id: 1, text: "Expert architect", createdAt: "2025-05-14T15:00:00Z" }], createdAt: "2025-05-14T15:00:00Z", updatedAt: "2025-05-14T15:00:00Z" },
+      { id: 15, name: "Olivia Clark", function: "Graphic Designer", company: "PixelPerfect Studio", linkedin: "https://linkedin.com/in/oliviaclark", comments: "Creative designs.", keywords: ["Graphic Design"], rating: "Bronze", remarks: [{ id: 1, text: "Promising talent", createdAt: "2025-05-15T10:00:00Z" }], createdAt: "2025-05-15T10:00:00Z", updatedAt: "2025-05-15T10:00:00Z" },
+      { id: 16, name: "Peter Harris", function: "Project Manager", company: "PlanWise Solutions", linkedin: "https://linkedin.com/in/peterharris", comments: "Certified PMP.", keywords: ["Project Management"], rating: "Silver", remarks: [{ id: 1, text: "Organized leader", createdAt: "2025-05-16T12:00:00Z" }], createdAt: "2025-05-16T12:00:00Z", updatedAt: "2025-05-16T12:00:00Z" },
+      { id: 17, name: "Quinn Lopez", function: "AI Engineer", company: "IntelliCore Labs", linkedin: "https://linkedin.com/in/quinnlopez", comments: "Deep learning expert.", keywords: ["AI", "TensorFlow"], rating: "Gold", remarks: [{ id: 1, text: "Innovative models", createdAt: "2025-05-17T14:00:00Z" }], createdAt: "2025-05-17T14:00:00Z", updatedAt: "2025-05-17T14:00:00Z" },
+      { id: 18, name: "Rachel White", function: "Sales Manager", company: "GrowFast Enterprises", linkedin: "https://linkedin.com/in/rachelwhite", comments: "Strong client skills.", keywords: ["Sales", "CRM"], rating: "Silver", remarks: [{ id: 1, text: "Top performer", createdAt: "2025-05-18T09:00:00Z" }], createdAt: "2025-05-18T09:00:00Z", updatedAt: "2025-05-18T09:00:00Z" },
+      { id: 19, name: "Samuel Green", function: "Database Administrator", company: "DataVault Systems", linkedin: "https://linkedin.com/in/samuelgreen", comments: "SQL optimizer.", keywords: ["SQL"], rating: "Bronze", remarks: [{ id: 1, text: "Reliable admin", createdAt: "2025-05-18T11:00:00Z" }], createdAt: "2025-05-18T11:00:00Z", updatedAt: "2025-05-18T11:00:00Z" },
+      { id: 20, name: "Tara Adams", function: "Quality Assurance Engineer", company: "TestRight Solutions", linkedin: "https://linkedin.com/in/taraadams", comments: "Automated testing.", keywords: ["QA", "Selenium"], rating: "Gold", remarks: [{ id: 1, text: "Thorough tester", createdAt: "2025-05-18T13:00:00Z" }], createdAt: "2025-05-18T13:00:00Z", updatedAt: "2025-05-18T13:00:00Z" }
     ];
 
     try {
       function App() {
-        console.log(' Yakir Initializing App component...');
+        console.log('Initializing App component...');
         const [candidates, setCandidates] = React.useState(() => {
           try {
             const saved = localStorage.getItem('candidates');
@@ -79,6 +79,8 @@
               linkedin: candidate.linkedin ? candidate.linkedin.trim() : '',
               comments: candidate.comments ? candidate.comments.trim() : '',
               keywords: Array.isArray(candidate.keywords) ? candidate.keywords.map(k => k.trim()).filter(k => k) : [],
+              rating: candidate.rating || 'Bronze',
+              remarks: Array.isArray(candidate.remarks) ? candidate.remarks : [],
               createdAt: new Date().toISOString(),
               updatedAt: new Date().toISOString()
             };
@@ -110,6 +112,8 @@
               linkedin: updatedCandidate.linkedin ? updatedCandidate.linkedin.trim() : '',
               comments: updatedCandidate.comments ? updatedCandidate.comments.trim() : '',
               keywords: Array.isArray(updatedCandidate.keywords) ? updatedCandidate.keywords.map(k => k.trim()).filter(k => k) : [],
+              rating: updatedCandidate.rating || 'Bronze',
+              remarks: Array.isArray(updatedCandidate.remarks) ? updatedCandidate.remarks : [],
               updatedAt: new Date().toISOString()
             };
             console.log('Updating candidate:', updated);
@@ -247,8 +251,13 @@
           linkedin: candidate?.linkedin || '',
           comments: candidate?.comments || '',
           keywords: candidate?.keywords || [],
+          rating: candidate?.rating || 'Bronze',
+          remarks: candidate?.remarks || []
         });
         const [error, setError] = React.useState('');
+        const [newRemark, setNewRemark] = React.useState('');
+        const [editingRemarkId, setEditingRemarkId] = React.useState(null);
+        const [editingRemarkText, setEditingRemarkText] = React.useState('');
 
         const handleSubmit = (e) => {
           e.preventDefault();
@@ -289,9 +298,77 @@
           }
         };
 
+        const addRemark = () => {
+          try {
+            if (newRemark.trim()) {
+              const remark = {
+                id: Date.now(),
+                text: newRemark.trim(),
+                createdAt: new Date().toISOString()
+              };
+              setFormData({
+                ...formData,
+                remarks: [...formData.remarks, remark]
+              });
+              setNewRemark('');
+              console.log('Added remark:', remark);
+            }
+          } catch (e) {
+            console.error('Error adding remark:', e.message, e.stack);
+          }
+        };
+
+        const editRemark = (id, text) => {
+          try {
+            setEditingRemarkId(id);
+            setEditingRemarkText(text);
+            console.log('Editing remark ID:', id);
+          } catch (e) {
+            console.error('Error starting remark edit:', e.message, e.stack);
+          }
+        };
+
+        const saveEditedRemark = () => {
+          try {
+            if (editingRemarkText.trim()) {
+              setFormData({
+                ...formData,
+                remarks: formData.remarks.map(remark =>
+                  remark.id === editingRemarkId
+                    ? { ...remark, text: editingRemarkText.trim(), createdAt: new Date().toISOString() }
+                    : remark
+                )
+              });
+              setEditingRemarkId(null);
+              setEditingRemarkText('');
+              console.log('Saved edited remark ID:', editingRemarkId);
+            }
+          } catch (e) {
+            console.error('Error saving edited remark:', e.message, e.stack);
+          }
+        };
+
+        const removeRemark = (id) => {
+          try {
+            setFormData({
+              ...formData,
+              remarks: formData.remarks.filter(remark => remark.id !== id)
+            });
+            console.log('Removed remark ID:', id);
+          } catch (e) {
+            console.error('Error removing remark:', e.message, e.stack);
+          }
+        };
+
+        const ratingColors = {
+          Gold: 'bg-yellow-400 text-yellow-900',
+          Silver: 'bg-gray-400 text-gray-900',
+          Bronze: 'bg-orange-600 text-white'
+        };
+
         return (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-8 rounded-xl w-full max-w-lg shadow-2xl">
+            <div className="bg-white p-8 rounded-xl w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto">
               <h2 className="text-2xl font-bold mb-6 text-gray-800">
                 {candidate ? 'Edit Candidate' : 'Add Candidate'}
               </h2>
@@ -338,10 +415,32 @@
                   rows="4"
                 ></textarea>
                 <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Rating</label>
+                  <div className="flex items-center gap-4">
+                    <input
+                      type="range"
+                      min="1"
+                      max="3"
+                      value={formData.rating === 'Gold' ? 3 : formData.rating === 'Silver' ? 2 : 1}
+                      onChange={(e) => {
+                        const value = parseInt(e.target.value);
+                        const rating = value === 3 ? 'Gold' : value === 2 ? 'Silver' : 'Bronze';
+                        setFormData({ ...formData, rating });
+                        console.log('Rating updated:', rating);
+                      }}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                    />
+                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${ratingColors[formData.rating]}`}>
+                      {formData.rating}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Keywords (max 10)</label>
                   <div className="flex gap-3">
                     <input
                       type="text"
-                      placeholder="Add keyword (max 10)"
+                      placeholder="Add keyword"
                       onKeyDown={(e) => {
                         if (e.key === 'Enter') {
                           addKeyword(e.target.value);
@@ -371,6 +470,79 @@
                     ))}
                   </div>
                 </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Remarks</label>
+                  <div className="flex gap-3 mb-3">
+                    <input
+                      type="text"
+                      placeholder="Add remark"
+                      value={newRemark}
+                      onChange={(e) => setNewRemark(e.target.value)}
+                      className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+                    />
+                    <button
+                      type="button"
+                      onClick={addRemark}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                      disabled={!newRemark.trim()}
+                    >
+                      Add
+                    </button>
+                  </div>
+                  {formData.remarks.length > 0 && (
+                    <ul className="space-y-2">
+                      {formData.remarks.map(remark => (
+                        <li key={remark.id} className="flex items-center gap-2">
+                          {editingRemarkId === remark.id ? (
+                            <div className="flex-1 flex gap-2">
+                              <input
+                                type="text"
+                                value={editingRemarkText}
+                                onChange={(e) => setEditingRemarkText(e.target.value)}
+                                className="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+                              />
+                              <button
+                                type="button"
+                                onClick={saveEditedRemark}
+                                className="px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                                disabled={!editingRemarkText.trim()}
+                              >
+                                Save
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setEditingRemarkId(null)}
+                                className="px-3 py-1 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300"
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          ) : (
+                            <>
+                              <span className="flex-1 text-sm text-gray-700">
+                                {remark.text} <span className="text-gray-500 text-xs">({new Date(remark.createdAt).toLocaleString()})</span>
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => editRemark(remark.id, remark.text)}
+                                className="text-blue-500 hover:text-blue-700 text-sm"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => removeRemark(remark.id)}
+                                className="text-red-500 hover:text-red-700 text-sm"
+                              >
+                                Delete
+                              </button>
+                            </>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
                 <div className="flex justify-end gap-3">
                   <button
                     type="button"
@@ -393,13 +565,24 @@
       }
 
       function CandidateCard({ candidate, onEdit, onDelete }) {
+        const ratingColors = {
+          Gold: 'bg-yellow-400 text-yellow-900 border-yellow-500',
+          Silver: 'bg-gray-400 text-gray-900 border-gray-500',
+          Bronze: 'bg-orange-600 text-white border-orange-700'
+        };
+
         return (
-          <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
-            <img
-              src={candidate.linkedin ? `https://api.dicebear.com/9.x/initials/svg?seed=${candidate.name}` : DEFAULT_PHOTO}
-              alt={candidate.name}
-              className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-gray-200"
-            />
+          <div className={`bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 border-2 ${ratingColors[candidate.rating].split(' ').slice(-1)[0]}`}>
+            <div className="flex justify-between items-start mb-4">
+              <img
+                src={candidate.linkedin ? `https://api.dicebear.com/9.x/initials/svg?seed=${candidate.name}` : DEFAULT_PHOTO}
+                alt={candidate.name}
+                className="w-24 h-24 rounded-full object-cover border-2 border-gray-200"
+              />
+              <span className={`px-3 py-1 rounded-full text-sm font-medium ${ratingColors[candidate.rating]}`}>
+                {candidate.rating}
+              </span>
+            </div>
             <h3 className="text-lg font-semibold text-gray-800">{candidate.name}</h3>
             <p className="text-gray-600 text-sm">{candidate.function}</p>
             <p className="text-gray-600 text-sm">{candidate.company}</p>
