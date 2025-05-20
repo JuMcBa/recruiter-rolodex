@@ -9,13 +9,18 @@
   <script src="https://unpkg.com/@babel/standalone@7.26.9/babel.min.js" crossorigin></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Custom Ripple Labs colors */
-    .ripple-blue { background-color: #00A9E0; }
-    .ripple-dark-blue { color: #003087; }
-    .ripple-dark-blue-bg { background-color: #003087; }
-    .ripple-white { background-color: #FFFFFF; }
-    .ripple-blue:hover { background-color: #0087B8; }
-    .ripple-dark-blue-bg:hover { background-color: #00255A; }
+    /* Apple-inspired colors */
+    .apple-blue { background-color: #0071E3; }
+    .apple-blue-hover:hover { background-color: #005BB5; }
+    .apple-dark-gray { color: #1D1D1F; }
+    .apple-medium-gray { color: #6E6E73; }
+    .apple-light-gray { background-color: #F5F5F7; }
+    .apple-white { background-color: #FFFFFF; }
+    .apple-focus-ring { outline: none; ring: 2px #0071E3; }
+    /* Smooth transitions */
+    .apple-transition { transition: all 200ms ease-in-out; }
+    /* San Francisco-like typography */
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
   </style>
 </head>
 <body>
@@ -23,7 +28,7 @@
   <script type="text/babel">
     console.log('Starting Recruiter Rolodex application at', new Date().toISOString());
     const DEFAULT_PHOTO = 'https://via.placeholder.com/150?text=No+Photo';
-    const RIPPLE_LOGO = 'https://www.clipartmax.com/png/small/75-756149_big-image-generic-logo-png-transparent.png'; // Public Ripple Labs logo
+    const GENERIC_LOGO = 'https://upload.wikimedia.org/wikipedia/commons/0/0b/Person_icon.svg'; // Generic person icon
 
     // Global rating colors for consistent styling
     const ratingColors = {
@@ -203,9 +208,9 @@
         console.log('Rendering with showModal:', showModal, 'modalMode:', modalMode, 'ratingFilter:', ratingFilter, 'recent candidates:', recentCandidates.map(c => c.name));
 
         return (
-          <div className="min-h-screen bg-gray-100 p-6">
+          <div className="min-h-screen apple-light-gray p-6">
             <div className="max-w-7xl mx-auto">
-              <h1 className="text-4xl font-extrabold mb-8 text-center ripple-dark-blue">Recruiter Rolodex</h1>
+              <h1 className="text-3xl font-semibold mb-8 text-center apple-dark-gray">Recruiter Rolodex</h1>
               {!showModal && (
                 <div className="mb-8">
                   <div className="flex gap-4 items-center">
@@ -217,7 +222,7 @@
                         setSearchTerm(e.target.value);
                         console.log('Search term updated:', e.target.value);
                       }}
-                      className="flex-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#00A9E0] shadow-sm bg-white"
+                      className="flex-1 p-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0071E3] shadow-sm apple-white font-sans"
                     />
                     <button
                       onClick={() => {
@@ -225,13 +230,13 @@
                         setShowModal(true);
                         console.log('Opening add candidate modal');
                       }}
-                      className="ripple-blue text-white px-6 py-3 rounded-lg hover:ripple-blue shadow-md font-medium"
+                      className="apple-blue text-white px-6 py-3 rounded-lg apple-blue-hover shadow-sm font-medium font-sans apple-transition"
                     >
                       Add Candidate
                     </button>
                   </div>
                   <div className="mt-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Filter by Rating</label>
+                    <label className="block text-sm font-medium apple-dark-gray mb-2">Filter by Rating</label>
                     <div className="flex items-center gap-4">
                       <input
                         type="range"
@@ -246,7 +251,7 @@
                         }}
                         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                       />
-                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${ratingFilter === 'All' ? 'bg-gray-200 text-gray-700' : ratingColors[ratingFilter]}`}>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${ratingFilter === 'All' ? 'bg-gray-200 text-gray-700' : ratingColors[ratingFilter]}`}>
                         {ratingFilter}
                       </span>
                     </div>
@@ -268,9 +273,9 @@
                 />
               )}
               {!showModal && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {(searchTerm || ratingFilter !== 'All' ? filteredCandidates : recentCandidates).map(candidate => {
-                    console.log('Rendering candidate card:', candidate.name, 'ID:', candidate.id);
+                    console.log('Rendering compact tile for:', candidate.name, 'Size: smaller padding, avatar');
                     return (
                       <CandidateCard
                         key={candidate.id}
@@ -297,10 +302,10 @@
                 </div>
               )}
               {!showModal && !searchTerm && ratingFilter === 'All' && recentCandidates.length === 0 && (
-                <p className="text-center text-gray-500 mt-4">No recent candidates available.</p>
+                <p className="text-center apple-medium-gray mt-4 text-sm font-sans">No recent candidates available.</p>
               )}
               <div className="mt-8 flex justify-center">
-                <img src={RIPPLE_LOGO} alt="Ripple Labs Logo" className="h-12" />
+                <img src={GENERIC_LOGO} alt="Generic Icon" className="h-8 apple-medium-gray" />
               </div>
             </div>
           </div>
@@ -425,94 +430,94 @@
         };
 
         return (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-8 rounded-xl w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto">
-              <h2 className="text-2xl font-bold mb-6 ripple-dark-blue">
+          <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+            <div className="apple-white p-6 rounded-2xl w-full max-w-md shadow-lg max-h-[90vh] overflow-y-auto bg-white/95 backdrop-blur-md">
+              <h2 className="text-xl font-semibold mb-6 apple-dark-gray">
                 {mode === 'view' ? 'View Candidate' : mode === 'edit' ? 'Edit Candidate' : 'Add Candidate'}
               </h2>
               {error && mode !== 'view' && (
-                <p className="text-red-500 mb-4 text-sm">{error}</p>
+                <p className="text-red-500 mb-4 text-sm font-sans">{error}</p>
               )}
               {mode === 'view' ? (
-                <div className="space-y-5">
+                <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Name</label>
-                    <p className="text-gray-900">{formData.name}</p>
+                    <label className="block text-sm font-medium apple-dark-gray">Name</label>
+                    <p className="text-sm apple-dark-gray font-sans">{formData.name}</p>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Function</label>
-                    <p className="text-gray-900">{formData.function}</p>
+                    <label className="block text-sm font-medium apple-dark-gray">Function</label>
+                    <p className="text-sm apple-dark-gray font-sans">{formData.function}</p>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Current Company</label>
-                    <p className="text-gray-900">{formData.company}</p>
+                    <label className="block text-sm font-medium apple-dark-gray">Current Company</label>
+                    <p className="text-sm apple-dark-gray font-sans">{formData.company}</p>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">LinkedIn Profile</label>
+                    <label className="block text-sm font-medium apple-dark-gray">LinkedIn Profile</label>
                     {formData.linkedin ? (
-                      <a href={formData.linkedin} target="_blank" rel="noopener noreferrer" className="text-[#00A9E0] hover:underline">
+                      <a href={formData.linkedin} target="_blank" rel="noopener noreferrer" className="text-[#0071E3] hover:underline text-sm font-sans">
                         {formData.linkedin}
                       </a>
                     ) : (
-                      <p className="text-gray-500">None</p>
+                      <p className="text-sm apple-medium-gray font-sans">None</p>
                     )}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Recruiting Comments</label>
-                    <p className="text-gray-900">{formData.comments || 'None'}</p>
+                    <label className="block text-sm font-medium apple-dark-gray">Recruiting Comments</label>
+                    <p className="text-sm apple-dark-gray font-sans">{formData.comments || 'None'}</p>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Rating</label>
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${ratingColors[formData.rating]}`}>
+                    <label className="block text-sm font-medium apple-dark-gray">Rating</label>
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${ratingColors[formData.rating]}`}>
                       {formData.rating}
                     </span>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Keywords</label>
+                    <label className="block text-sm font-medium apple-dark-gray">Keywords</label>
                     <div className="flex flex-wrap gap-2 mt-2">
                       {formData.keywords.length > 0 ? (
                         formData.keywords.map((keyword, index) => (
-                          <span key={index} className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
+                          <span key={index} className="bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-xs font-sans">
                             {keyword}
                           </span>
                         ))
                       ) : (
-                        <p className="text-gray-500">None</p>
+                        <p className="text-sm apple-medium-gray font-sans">None</p>
                       )}
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Remarks</label>
+                    <label className="block text-sm font-medium apple-dark-gray">Remarks</label>
                     {formData.remarks.length > 0 ? (
                       <ul className="space-y-2 mt-2">
                         {formData.remarks.map(remark => (
-                          <li key={remark.id} className="text-sm text-gray-700">
-                            {remark.text} <span className="text-gray-500 text-xs">({new Date(remark.createdAt).toLocaleString()})</span>
+                          <li key={remark.id} className="text-sm apple-dark-gray font-sans">
+                            {remark.text} <span className="text-xs apple-medium-gray">({new Date(remark.createdAt).toLocaleString()})</span>
                           </li>
                         ))}
                       </ul>
                     ) : (
-                      <p className="text-gray-500 mt-2">None</p>
+                      <p className="text-sm apple-medium-gray font-sans mt-2">None</p>
                     )}
                   </div>
                   <div className="flex justify-end">
                     <button
                       type="button"
                       onClick={onClose}
-                      className="px-5 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition font-medium"
+                      className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 text-sm font-medium font-sans apple-transition"
                     >
                       Close
                     </button>
                   </div>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form onSubmit={handleSubmit} className="space-y-4">
                   <input
                     type="text"
                     placeholder="Name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00A9E0] bg-white"
+                    className="w-full p-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0071E3] apple-white text-sm font-sans"
                     required
                   />
                   <input
@@ -520,7 +525,7 @@
                     placeholder="Function"
                     value={formData.function}
                     onChange={(e) => setFormData({ ...formData, function: e.target.value })}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00A9E0] bg-white"
+                    className="w-full p-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0071E3] apple-white text-sm font-sans"
                     required
                   />
                   <input
@@ -528,7 +533,7 @@
                     placeholder="Current Company"
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00A9E0] bg-white"
+                    className="w-full p-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0071E3] apple-white text-sm font-sans"
                     required
                   />
                   <input
@@ -536,17 +541,17 @@
                     placeholder="LinkedIn Profile"
                     value={formData.linkedin}
                     onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00A9E0] bg-white"
+                    className="w-full p-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0071E3] apple-white text-sm font-sans"
                   />
                   <textarea
                     placeholder="Recruiting Comments"
                     value={formData.comments}
                     onChange={(e) => setFormData({ ...formData, comments: e.target.value })}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00A9E0] bg-white"
+                    className="w-full p-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0071E3] apple-white text-sm font-sans"
                     rows="4"
                   ></textarea>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Rating</label>
+                    <label className="block text-sm font-medium apple-dark-gray mb-2">Rating</label>
                     <div className="flex items-center gap-4">
                       <input
                         type="range"
@@ -561,13 +566,13 @@
                         }}
                         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                       />
-                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${ratingColors[formData.rating]}`}>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${ratingColors[formData.rating]}`}>
                         {formData.rating}
                       </span>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Keywords (max 10)</label>
+                    <label className="block text-sm font-medium apple-dark-gray mb-2">Keywords (max 10)</label>
                     <div className="flex gap-3">
                       <input
                         type="text"
@@ -579,15 +584,15 @@
                             e.preventDefault();
                           }
                         }}
-                        className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00A9E0] bg-white"
+                        className="flex-1 p-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0071E3] apple-white text-sm font-sans"
                         disabled={formData.keywords.length >= 10}
                       />
                     </div>
-                    <div className="flex flex-wrap gap-2 mt-3">
+                    <div className="flex flex-wrap gap-2 mt-2">
                       {formData.keywords.map((keyword, index) => (
                         <span
                           key={index}
-                          className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full flex items-center text-sm"
+                          className="bg-gray-100 text-gray-800 px-2 py-1 rounded-full flex items-center text-xs font-sans"
                         >
                           {keyword}
                           <button
@@ -602,19 +607,19 @@
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Remarks</label>
+                    <label className="block text-sm font-medium apple-dark-gray mb-2">Remarks</label>
                     <div className="flex gap-3 mb-3">
                       <input
                         type="text"
                         placeholder="Add remark"
                         value={newRemark}
                         onChange={(e) => setNewRemark(e.target.value)}
-                        className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00A9E0] bg-white"
+                        className="flex-1 p-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0071E3] apple-white text-sm font-sans"
                       />
                       <button
                         type="button"
                         onClick={addRemark}
-                        className="px-4 py-2 ripple-blue text-white rounded-lg hover:ripple-blue transition"
+                        className="px-4 py-2 apple-blue text-white rounded-lg apple-blue-hover text-sm font-medium font-sans apple-transition"
                         disabled={!newRemark.trim()}
                       >
                         Add
@@ -630,12 +635,12 @@
                                   type="text"
                                   value={editingRemarkText}
                                   onChange={(e) => setEditingRemarkText(e.target.value)}
-                                  className="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00A9E0] bg-white"
+                                  className="flex-1 p-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0071E3] apple-white text-sm font-sans"
                                 />
                                 <button
                                   type="button"
                                   onClick={saveEditedRemark}
-                                  className="px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                                  className="px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-sans apple-transition"
                                   disabled={!editingRemarkText.trim()}
                                 >
                                   Save
@@ -643,27 +648,27 @@
                                 <button
                                   type="button"
                                   onClick={() => setEditingRemarkId(null)}
-                                  className="px-3 py-1 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300"
+                                  className="px-3 py-1 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 text-sm font-sans apple-transition"
                                 >
                                   Cancel
                                 </button>
                               </div>
                             ) : (
                               <>
-                                <span className="flex-1 text-sm text-gray-700">
-                                  {remark.text} <span className="text-gray-500 text-xs">({new Date(remark.createdAt).toLocaleString()})</span>
+                                <span className="flex-1 text-sm apple-dark-gray font-sans">
+                                  {remark.text} <span className="text-xs apple-medium-gray">({new Date(remark.createdAt).toLocaleString()})</span>
                                 </span>
                                 <button
                                   type="button"
                                   onClick={() => editRemark(remark.id, remark.text)}
-                                  className="text-[#00A9E0] hover:text-[#0087B8] text-sm"
+                                  className="text-[#0071E3] hover:text-[#005BB5] text-sm font-sans"
                                 >
                                   Edit
                                 </button>
                                 <button
                                   type="button"
                                   onClick={() => removeRemark(remark.id)}
-                                  className="text-red-500 hover:text-red-700 text-sm"
+                                  className="text-red-500 hover:text-red-700 text-sm font-sans"
                                 >
                                   Delete
                                 </button>
@@ -678,13 +683,13 @@
                     <button
                       type="button"
                       onClick={onClose}
-                      className="px-5 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition font-medium"
+                      className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 text-sm font-medium font-sans apple-transition"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="px-5 py-2 ripple-blue text-white rounded-lg hover:ripple-blue transition font-medium"
+                      className="px-4 py-2 apple-blue text-white rounded-lg apple-blue-hover text-sm font-medium font-sans apple-transition"
                     >
                       Save
                     </button>
@@ -703,58 +708,60 @@
           Bronze: 'bg-orange-600 text-white border-orange-700'
         };
 
+        console.log('Rendering compact tile for:', candidate.name, 'Size: smaller padding, avatar');
+
         return (
-          <div className={`bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 border-2 ${ratingBadgeColors[candidate.rating].split(' ').slice(-1)[0]}`}>
-            <div className="flex justify-between items-start mb-4">
+          <div className={`apple-white p-4 rounded-xl shadow-sm hover:shadow-md apple-transition transform hover:-translate-y-1 border border-gray-100`}>
+            <div className="flex justify-between items-start mb-3">
               <img
                 src={candidate.linkedin ? `https://api.dicebear.com/9.x/initials/svg?seed=${candidate.name}` : DEFAULT_PHOTO}
                 alt={candidate.name}
-                className="w-24 h-24 rounded-full object-cover border-2 border-gray-200"
+                className="w-16 h-16 rounded-full object-cover border border-gray-200"
               />
-              <span className={`px-3 py-1 rounded-full text-sm font-medium ${ratingColors[candidate.rating]}`}>
+              <span className={`px-2 py-1 rounded-full text-xs font-medium ${ratingColors[candidate.rating]}`}>
                 {candidate.rating}
               </span>
             </div>
-            <h3 className="text-lg font-semibold text-gray-800">{candidate.name}</h3>
-            <p className="text-gray-600 text-sm">{candidate.function}</p>
-            <p className="text-gray-600 text-sm">{candidate.company}</p>
+            <h3 className="text-base font-semibold apple-dark-gray font-sans">{candidate.name}</h3>
+            <p className="text-sm apple-medium-gray font-sans">{candidate.function}</p>
+            <p className="text-sm apple-medium-gray font-sans">{candidate.company}</p>
             {candidate.linkedin && (
               <a
                 href={candidate.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#00A9E0] hover:underline text-sm"
+                className="text-[#0071E3] hover:underline text-sm font-sans"
               >
-                LinkedIn Profile
+                LinkedIn
               </a>
             )}
-            <p className="text-gray-500 mt-2 text-sm">{candidate.comments}</p>
-            <div className="flex flex-wrap gap-2 mt-3">
+            <p className="text-sm apple-medium-gray mt-2 font-sans line-clamp-2">{candidate.comments}</p>
+            <div className="flex flex-wrap gap-2 mt-2">
               {candidate.keywords.map((keyword, index) => (
                 <span
                   key={index}
-                  className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs"
+                  className="bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-xs font-sans"
                 >
                   {keyword}
                 </span>
               ))}
             </div>
-            <div className="flex justify-end gap-3 mt-4">
+            <div className="flex justify-end gap-2 mt-3">
               <button
                 onClick={onView}
-                className="text-[#00A9E0] hover:text-[#0087B8] text-sm font-medium"
+                className="text-[#0071E3] hover:text-[#005BB5] text-sm font-sans apple-transition"
               >
                 View
               </button>
               <button
                 onClick={onEdit}
-                className="text-[#00A9E0] hover:text-[#0087B8] text-sm font-medium"
+                className="text-[#0071E3] hover:text-[#005BB5] text-sm font-sans apple-transition"
               >
                 Edit
               </button>
               <button
                 onClick={onDelete}
-                className="text-red-500 hover:text-red-700 text-sm font-medium"
+                className="text-red-500 hover:text-red-700 text-sm font-sans apple-transition"
               >
                 Delete
               </button>
@@ -763,7 +770,7 @@
         );
       }
 
-      console.log('Rendering application...');
+      console.log('Rendering application with Apple-inspired theme and generic logo...');
       try {
         ReactDOM.render(<App />, document.getElementById('root'));
         console.log('Application rendered successfully');
