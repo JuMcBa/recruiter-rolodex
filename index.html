@@ -21,6 +21,8 @@
     .apple-transition { transition: all 200ms ease-in-out; }
     /* San Francisco-like typography */
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    /* Custom hover scale */
+    .hover-scale:hover { transform: scale(1.05); }
   </style>
 </head>
 <body>
@@ -28,7 +30,7 @@
   <script type="text/babel">
     console.log('Starting Recruiter Rolodex application at', new Date().toISOString());
     const DEFAULT_PHOTO = 'https://via.placeholder.com/150?text=No+Photo';
-    const GENERIC_LOGO = 'https://upload.wikimedia.org/wikipedia/commons/0/0b/Person_icon.svg'; // Generic person icon
+    const GENERIC_LOGO = 'https://www.clipartmax.com/png/small/75-756149_big-image-generic-logo-png-transparent.png'; // New generic logo
 
     // Global rating colors for consistent styling
     const ratingColors = {
@@ -237,23 +239,28 @@
                   </div>
                   <div className="mt-4">
                     <label className="block text-sm font-medium apple-dark-gray mb-2">Filter by Rating</label>
-                    <div className="flex items-center gap-4">
-                      <input
-                        type="range"
-                        min="0"
-                        max="3"
-                        value={ratingFilter === 'All' ? 0 : ratingFilter === 'Bronze' ? 1 : ratingFilter === 'Silver' ? 2 : 3}
-                        onChange={(e) => {
-                          const value = parseInt(e.target.value);
-                          const rating = value === 0 ? 'All' : value === 1 ? 'Bronze' : value === 2 ? 'Silver' : 'Gold';
-                          setRatingFilter(rating);
-                          console.log('Rating filter updated:', rating);
-                        }}
-                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                      />
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${ratingFilter === 'All' ? 'bg-gray-200 text-gray-700' : ratingColors[ratingFilter]}`}>
-                        {ratingFilter}
-                      </span>
+                    <div className="flex gap-2">
+                      {['All', 'Bronze', 'Silver', 'Gold'].map(rating => (
+                        <button
+                          key={rating}
+                          onClick={() => {
+                            setRatingFilter(rating);
+                            console.log('Rating filter updated:', rating);
+                          }}
+                          className={`flex-1 py-2 px-3 rounded-lg font-sans text-sm font-medium apple-transition ${
+                            ratingFilter === rating
+                              ? 'apple-blue text-white'
+                              : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                          }`}
+                        >
+                          <span className="flex items-center justify-center gap-1">
+                            {rating === 'Bronze' && '🥉'}
+                            {rating === 'Silver' && '🥈'}
+                            {rating === 'Gold' && '🥇'}
+                            {rating}
+                          </span>
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -273,9 +280,9 @@
                 />
               )}
               {!showModal && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                   {(searchTerm || ratingFilter !== 'All' ? filteredCandidates : recentCandidates).map(candidate => {
-                    console.log('Rendering compact tile for:', candidate.name, 'Size: smaller padding, avatar');
+                    console.log('Rendering compact tile for:', candidate.name, 'Size: 25% smaller, enhanced visuals');
                     return (
                       <CandidateCard
                         key={candidate.id}
@@ -305,7 +312,7 @@
                 <p className="text-center apple-medium-gray mt-4 text-sm font-sans">No recent candidates available.</p>
               )}
               <div className="mt-8 flex justify-center">
-                <img src={GENERIC_LOGO} alt="Generic Icon" className="h-8 apple-medium-gray" />
+                <img src={GENERIC_LOGO} alt="Generic Logo" className="h-8 apple-medium-gray" />
               </div>
             </div>
           </div>
@@ -455,8 +462,11 @@
                   <div>
                     <label className="block text-sm font-medium apple-dark-gray">LinkedIn Profile</label>
                     {formData.linkedin ? (
-                      <a href={formData.linkedin} target="_blank" rel="noopener noreferrer" className="text-[#0071E3] hover:underline text-sm font-sans">
-                        {formData.linkedin}
+                      <a href={formData.linkedin} target="_blank" rel="noopener noreferrer" className="text-[#0071E3] hover:underline text-sm font-sans flex items-center gap-1">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.024-3.037-1.85-3.037-1.85 0-2.132 1.444-2.132 2.936v5.67H9.357V9h3.414v1.561h.048c.476-.9 1.636-1.85 3.365-1.85 3.602 0 4.263 2.37 4.263 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.93-2.063-2.077 0-1.147.92-2.077 2.063-2.077 1.143 0 2.063.93 2.063 2.077 0 1.147-.92 2.077-2.063 2.077zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .792 0 1.771v20.458C0 23.208.792 24 1.771 24h20.454c.979 0 1.771-.792 1.771-1.771V1.771C24 .792 23.208 0 22.225 0z"/>
+                        </svg>
+                        LinkedIn
                       </a>
                     ) : (
                       <p className="text-sm apple-medium-gray font-sans">None</p>
@@ -708,60 +718,63 @@
           Bronze: 'bg-orange-600 text-white border-orange-700'
         };
 
-        console.log('Rendering compact tile for:', candidate.name, 'Size: smaller padding, avatar');
+        console.log('Rendering compact tile for:', candidate.name, 'Size: 25% smaller, enhanced visuals');
 
         return (
-          <div className={`apple-white p-4 rounded-xl shadow-sm hover:shadow-md apple-transition transform hover:-translate-y-1 border border-gray-100`}>
-            <div className="flex justify-between items-start mb-3">
+          <div className={`apple-white p-3 rounded-xl shadow-sm hover:shadow-md apple-transition hover-scale border border-gray-100`}>
+            <div className="flex justify-between items-start mb-2">
               <img
                 src={candidate.linkedin ? `https://api.dicebear.com/9.x/initials/svg?seed=${candidate.name}` : DEFAULT_PHOTO}
                 alt={candidate.name}
-                className="w-16 h-16 rounded-full object-cover border border-gray-200"
+                className="w-12 h-12 rounded-full object-cover border border-gray-200"
               />
-              <span className={`px-2 py-1 rounded-full text-xs font-medium ${ratingColors[candidate.rating]}`}>
+              <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${ratingColors[candidate.rating]}`}>
                 {candidate.rating}
               </span>
             </div>
-            <h3 className="text-base font-semibold apple-dark-gray font-sans">{candidate.name}</h3>
-            <p className="text-sm apple-medium-gray font-sans">{candidate.function}</p>
-            <p className="text-sm apple-medium-gray font-sans">{candidate.company}</p>
+            <h3 className="text-sm font-semibold apple-dark-gray font-sans">{candidate.name}</h3>
+            <p className="text-xs apple-medium-gray font-sans">{candidate.function}</p>
+            <p className="text-xs apple-medium-gray font-sans">{candidate.company}</p>
             {candidate.linkedin && (
               <a
                 href={candidate.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#0071E3] hover:underline text-sm font-sans"
+                className="text-[#0071E3] hover:underline text-xs font-sans flex items-center gap-1"
               >
+                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.024-3.037-1.85-3.037-1.85 0-2.132 1.444-2.132 2.936v5.67H9.357V9h3.414v1.561h.048c.476-.9 1.636-1.85 3.365-1.85 3.602 0 4.263 2.37 4.263 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.93-2.063-2.077 0-1.147.92-2.077 2.063-2.077 1.143 0 2.063.93 2.063 2.077 0 1.147-.92 2.077-2.063 2.077zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .792 0 1.771v20.458C0 23.208.792 24 1.771 24h20.454c.979 0 1.771-.792 1.771-1.771V1.771C24 .792 23.208 0 22.225 0z"/>
+                </svg>
                 LinkedIn
               </a>
             )}
-            <p className="text-sm apple-medium-gray mt-2 font-sans line-clamp-2">{candidate.comments}</p>
-            <div className="flex flex-wrap gap-2 mt-2">
+            <p className="text-xs apple-medium-gray mt-1.5 font-sans line-clamp-2">{candidate.comments}</p>
+            <div className="flex flex-wrap gap-1.5 mt-1.5">
               {candidate.keywords.map((keyword, index) => (
                 <span
                   key={index}
-                  className="bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-xs font-sans"
+                  className="bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded-full text-xs font-sans"
                 >
                   {keyword}
                 </span>
               ))}
             </div>
-            <div className="flex justify-end gap-2 mt-3">
+            <div className="flex justify-end gap-1.5 mt-2">
               <button
                 onClick={onView}
-                className="text-[#0071E3] hover:text-[#005BB5] text-sm font-sans apple-transition"
+                className="text-[#0071E3] hover:text-[#005BB5] text-xs font-sans apple-transition"
               >
                 View
               </button>
               <button
                 onClick={onEdit}
-                className="text-[#0071E3] hover:text-[#005BB5] text-sm font-sans apple-transition"
+                className="text-[#0071E3] hover:text-[#005BB5] text-xs font-sans apple-transition"
               >
                 Edit
               </button>
               <button
                 onClick={onDelete}
-                className="text-red-500 hover:text-red-700 text-sm font-sans apple-transition"
+                className="text-red-500 hover:text-red-700 text-xs font-sans apple-transition"
               >
                 Delete
               </button>
@@ -770,7 +783,7 @@
         );
       }
 
-      console.log('Rendering application with Apple-inspired theme and generic logo...');
+      console.log('Rendering application with Apple-inspired theme and new generic logo...');
       try {
         ReactDOM.render(<App />, document.getElementById('root'));
         console.log('Application rendered successfully');
